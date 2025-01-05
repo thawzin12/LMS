@@ -1,0 +1,43 @@
+<%- include('header.ejs') %>
+<%- include('sidebar.ejs') %>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">View Feedback</li>
+        </ol>
+        <div class="card mb-8">
+            <div class="card-header">
+                View Feedback
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>FeedBack Category</th>
+                            <th>FeedBack</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>FeedBack Category</th>
+                            <th>FeedBack</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <% feedback[0].forEach(user => { %>
+                        <tr>
+                            <td><%= user.name %></td>
+                            <td><%= user.fid %></td>
+                            <td><%= user.feedback %></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include('footer.ejs') %>

@@ -1,0 +1,71 @@
+<%- include('admintop.ejs') %>
+<%- include('adminheader.ejs') %>
+<%- include('adminsidebar.ejs') %>
+
+<main id="main" class="main">
+    <% if (successMessage) { %>
+    <div class="alert alert-success">
+        <marquee behavior="scroll" direction="left"><%= successMessage %></marquee>
+    </div>
+    <% } %>
+
+    <h1>View Feedback</h1>
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Student Feedback</h3>
+                        <div class="table-responsive">
+                            <table id="datatablesSimple" class="table table-striped table-bordered ">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>NO.</th>
+                                        <th>Feedback Category</th>
+                                        <th>Feedback</th>
+                                        <th>Date</th>
+                                        <th>Delete</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% feedback[0].forEach((user,index) => { %>
+                                    <tr>
+                                        <td><%= ++index %></td>
+                                        <td><%= user.feedbackcategory %></td>
+                                        <td><%= user.feedback %></td>
+                                        <td><%= user.feedback_date %></td>
+
+                                        <td>
+                                            <form action="/admin/deletefeedback/<%= user.fid %>" method="POST"
+                                                style="display:inline;">
+                                                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('adminfooter.ejs') %>
+<%- include('adminbottom.ejs') %>
+
+<script>
+    $(document).ready(function () {
+        $('#studentsTable').DataTable({
+            responsive: true,
+            autoWidth: false,
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true
+        });
+    });
+</script>

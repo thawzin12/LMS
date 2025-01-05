@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="static/css/quiz.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <style>
+
+    </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<body>
+    <script>
+        
+        const questions = [
+            {
+                question: ' What is a data structure?',
+                options: [' A programming language', 'A way to store and organize data', 'A collection of algorithms', ' A type of computer hardware'],
+                correctAnswer: 'A way to store and organize data'
+            },
+
+            {
+                question: 'What are the disadvantages of arrays?',
+                options: ['Index value of an array can be negative', 'Elements are sequentially accessed',
+                    'Data structure like queue or stack cannot be implemented',
+                    'There are chances of wastage of memory space if elements inserted in an array are lesser than the allocated size'
+                ],
+                correctAnswer: 'There are chances of wastage of memory space if elements inserted in an array are lesser than the allocated size'
+            },
+
+            {
+                question: 'Which data structure is used for implementing recursion?',
+                options: ['Stack', 'Queue', 'List', 'Array'],
+                correctAnswer: 'Stack'
+            },
+            {
+                question: 'The data structure required for Breadth First Traversal on a graph is?',
+                options: ['Array', 'Stack', 'Tree', 'Queue'],
+                correctAnswer: 'Queue'
+            },
+            {
+                question: 'Which of the following points is/are not true about Linked List data structure when it is compared with an array?',
+                options: ['Access of elements in linked list takes less time than compared to arrays', ' Random access is not allowed in a typical implementation of Linked Lists', 'Arrays have better cache locality that can make them better in terms of performance', 'It is easy to insert and delete elements in Linked List'],
+                correctAnswer: 'Access of elements in linked list takes less time than compared to arrays'
+            },
+            {
+                question: 'What is a bit array?',
+                options: ['Data structure that compactly stores bits', 'Data structure for representing arrays of records', 'Array in which elements are not present in continuous locations', 'An array in which most of the elements have the same value'],
+                correctAnswer: 'Data structure that compactly stores bits'
+            },
+
+            {
+                question: "Which of the following is not the type of queue?",
+                options: ['Priority queue', ' Circular queue', 'Single ended queue', 'Ordinary '],
+                correctAnswer: 'Single ended queue'
+            },
+
+            {
+                question: "Which of the following is the most widely used external memory data structure?",
+                options: ['B-tree', 'Red-black tree', 'AVL tree', 'Both AVL tree and Red-black tree'],
+                correctAnswer: 'B-tree'
+            },
+
+            {
+                question: "What is an AVL tree?.",
+                options: ['a tree which is unbalanced and is a height balanced treegnificant',
+                    'a tree which is balanced and is a height balanced tree', 'a tree with atmost 3 children', 'a tree with three children'],
+                correctAnswer: 'a tree which is balanced and is a height balanced treepectacular'
+            },
+
+            {
+                question: " Which type of data structure is a ternary heap?",
+                options: ['Hash', 'Array', 'Priority Stack', 'Priority Queue'],
+                correctAnswer: 'Priority Queue'
+            }
+
+
+        ];
+      
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        shuffleArray(questions);
+        let currentQuestionIndex = 0;
+        var marks = 0;
+        let userAnswers = [];
+        let timer; // Variable to store the timer
+        const overallTimeLimit = 600; // 5 minutes in seconds
+        var spend = 0;
+
+        function startTimer() {
+            let timeLeft = overallTimeLimit;
+            timer = setInterval(function () {
+                timeLeft--;
+                if (timeLeft) {
+                    spend += 1;
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    displayResults();
+                }
+                updateTimerDisplay(timeLeft, spend);
+            }, 1000);
+        }
+
+        function updateTimerDisplay(seconds, spendseco) {
+            const timespend = document.getElementById('spend');
+            const timerElement = document.getElementById('timer');
+            if (timespend) {
+                const sminutes = Math.floor(spendseco / 60);
+                const spendseconds = spendseco % 60;
+                timespend.textContent = `Time spent:${sminutes}m ${spendseconds}s`;
+            }
+
+            if (timerElement) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                timerElement.textContent = `Time Left: ${minutes}m ${remainingSeconds}s`;
+            }
+        }
+        function selectAnswer(index) {
+            const userAnswer = questions[currentQuestionIndex]?.options[index];
+            const correctAnswer = questions[currentQuestionIndex]?.correctAnswer;
+            userAnswers.push({
+                question: questions[currentQuestionIndex]?.question,
+                userAnswer,
+                correctAnswer,
+            });
+            if (userAnswer === correctAnswer) {
+                marks++;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                updateQuiz();
+            } else {
+
+                displayResults();
+            }
+        }
+        window.onload = startTimer();
+        function updateQuiz() {
+            document.body.innerHTML = `
+                <div class="container" >
+                    <div class="quiz-box">
+                        <h1>Quiz</h1>
+                        <div class="quiz-header">
+                            <h1><span>CST-2211</span></h1>
+                            <span id="timer" class="header-score"></span>
+                            <span class="header-score class="text-primary">Score: ${marks}/${questions.length}</span>
+                        </div>
+                        <div id="spend" class="header-score"></div>
+                        <div class="quiz-question">
+                            <p>${questions[currentQuestionIndex]?.question}</p>
+                        </div>
+                        <div class="options-list">
+                            ${questions[currentQuestionIndex]?.options.map((option, index) => `
+                                <button onclick="selectAnswer(${index})">${option}</button>
+                            `).join('')}
+                        </div>
+                        <div class="quiz-footer">
+                            <span class="question-total">${currentQuestionIndex + 1} of ${questions.length} questions</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        function displayResults() {
+            clearInterval(timer); // Stop the timer
+            submitTotalMarks();
+            document.body.innerHTML = `<body class="bg-success-subtle">
+            <center >
+                <div class="container-fluid col-md-6 col-sm-4 style="max-height: 1000px; overflow-y: auto;">
+                    <div class="quiz-box">
+                        <h1>Quiz</h1>
+                        <div class="quiz-header">
+                            <h1><span>CST-2211</span></h1>
+                            <span class="header-score ">Score: ${marks}<span><span class="header-score ">/${questions.length}</span>
+                        </div>
+                        <div class="results-container ">
+                            <h2>Results</h2>
+                            ${userAnswers.map((answer, index) => `
+                                <div class="question-result">
+                                    <h3>Question ${index + 1}</h3>
+                                    <div class="result-details">
+                                        <p class="text-primary"><strong>Question:</strong>${answer.question}</p>
+                                        <p><strong>Your Answer:</strong> ${answer.userAnswer}</p>
+                                        <p class="text-success"><strong>Correct Answer:</strong> ${answer.correctAnswer}</p>
+                                        <hr class="bg-dark h-25">
+                                    </div>
+                                </div>
+                            `).join('')}
+                            <div class="total-results">
+                                <p>Total Questions: ${questions.length}</p>
+                                <p>Total Marks: ${marks}</p>
+
+    <a href="home" class="text-white btn btn-primary" style="text-decoration:none;">Back</a>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </center>
+              <body>
+            `;
+
+            if (marks == 15) {
+                Swal.fire({
+                    title: 'Outstanding',
+                    icon: 'star',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-out' // Add your custom background class
+                    }
+                });
+            }
+            else if (marks >= 10) {
+                Swal.fire({
+                    title: 'Excellent',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-excellent' // Add your custom background class
+                    }
+                });
+            } else if (marks <= 10 && marks >= 5) {
+                Swal.fire({
+                    title: 'Good',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-good' // Add your custom background class
+                    }
+                });
+            } else if (marks <= 4) {
+                Swal.fire({
+                    title: 'You need to try!',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-try' // Add your custom background class
+                    }
+                });
+            }
+        }
+        updateQuiz();
+        function submitTotalMarks() {
+            var cid = `<%=cid%>`;
+            var cname = `<%=cname%>`;
+            var uid = `<%=uid%>`;
+            fetch('/totalmarks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cid, cname, uid, marks }) // Correctly stringify the JSON object
+            })
+                .then(response => {
+                    console.log('Total marks submitted successfully.');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+
+</html>

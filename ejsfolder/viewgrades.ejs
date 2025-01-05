@@ -1,0 +1,74 @@
+<%- include('teacherheader.ejs') %>
+<main>
+
+    <div class="container-fluid px-4">
+
+        <div class="row m-3">
+            <div class="col-12">
+                <div class="content">
+                    <h5 class="my-4">Your Posted Titles and Student Answers</h5>
+
+                    <% if (studentAnswers.length === 0) { %>
+                    <div class="alert alert-warning" role="alert">
+                        No student answers available for your posted titles.
+                    </div>
+                    <% } else { %>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Answers Overview</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Title Name</th>
+                                            <th>Student Name</th>
+                                            <th>Roll Number</th>
+                                            <th>Total Marks</th>
+                                            <th>Year</th>
+                                            <th>Semester</th>
+                                            <th>Section</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% studentAnswers.forEach(answer => { %>
+                                        <tr>
+                                            <td><%= answer.title_name %></td>
+                                            <td><%= answer.student_name %></td>
+                                            <td><%= answer.roll_number %></td>
+                                            <td><%= answer.total_marks %></td>
+                                            <td><%= answer.grade_name %></td>
+                                            <td><%= answer.semester_name %></td>
+                                            <td><%= answer.section_name %></td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<%- include('teacherbottom.ejs') %>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="/static/teacher/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/static/teacher/assets/demo/chart-area-demo.js"></script>
+<script src="/static/teacher/assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="/static/teacher/js/datatables-simple-demo.js"></script>
+<!-- <script src="/static/js/bootstrap.bundle.min.js"></script> -->
+<script src="/static/js/jquery.min.js"></script>
+
+</body>
+
+</html>

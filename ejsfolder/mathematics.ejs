@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="static/css/quiz.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <style>
+
+    </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<body>
+    <script>
+        const questions = [
+            {
+                question: 'Which one of the following is not a criterion for linearity of an equation?',
+                options: ['The dependent variable y should be of second order',
+                    'The derivatives of the dependent variable should be of second order',
+                    'Each coefficient does not depend on the independent variable',
+                    'Each coefficient depends only on the independent variable'],
+                correctAnswer: 'Each coefficient does not depend on the independent variable'
+            },
+
+            {
+                question: 'The determinant of the matrix whose eigen values are 7, 1, 9 is given by ____',
+                options: ['7', '63', '9', '17'],
+                correctAnswer: '63'
+            },
+
+            {
+                question: 'The sum of two symmetric matrices is also a symmetric matrix.',
+                options: ['True', 'False'],
+                correctAnswer: 'True'
+            },
+            {
+                question: 'Consider the following two statements: I The maximum number of linearly independent column vectors of a matrix A is called the rank of A. II If A is an n x n square matrix, it will be nonsingular is rank A = nWith reference to the above statements, which of the following applies ?',
+                options: ['Both the statements are false', 'Both the statements are true', 'I is true but II is false', 'I is false but II is true.'],
+                correctAnswer: 'Both the statements are true'
+            },
+            {
+                question: 'A set of linear equations is represented by the matrix equation Ax = b. The necessary condition for the existence of a solution for this system is',
+                options: ['A must be invertible', ' must be linearly', 'b must be linearly independent of the columns of A', 'None of these'],
+                correctAnswer: 'A must be invertible'
+            },
+            {
+                question: 'The system of linear equations (4d - 1)x +y + z = 0- y + z = 0(4d - 1) z = 0has a non-trivial solution, if d equals',
+                options: ['1/2', '1/4', '3/4', '1'],
+                correctAnswer: '1/4'
+            },
+
+            {
+                question: "The rank of a 3 x 3 matrix C (= AB), found by multiplying a non-zero column matrix A of size 3 x 1 and a non-zero row matrix B of size 1 x 3, is",
+                options: ['0', '1', '2', '3'],
+                correctAnswer: '1'
+            },
+
+            {
+                question: " If A and B are square matrices of size n x n, then which of the following statement is not true? ",
+                options: ['det. (AB) = det (A) det (B)', 'det (A + B) = det (A) + det (B)', 'det (kA) = kn det (A)', ' det (AT) =1/det (A-1)'],
+                correctAnswer: 'det (A + B) = det (A) + det (B)'
+            },
+
+            {
+                question: "Eigen values of a real symmetric matrix are always",
+                options: ['positive', 'real and imaginary', 'negative', 'real'],
+                correctAnswer: 'real'
+            },
+            {
+                question: "The system of equations 4x + 6y = 8 7x + 8y = 9 3x + 2y = 1 has",
+                options: ['no solutions', 'only one solution', 'two solutions', 'infinite number of solutions'],
+                correctAnswer: 'only one solution'
+            }
+        ]
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        shuffleArray(questions);
+        let currentQuestionIndex = 0;
+        var marks = 0;
+        let userAnswers = [];
+        let timer; // Variable to store the timer
+        const overallTimeLimit = 600; // 5 minutes in seconds
+        var spend = 0;
+
+        function startTimer() {
+            let timeLeft = overallTimeLimit;
+            timer = setInterval(function () {
+                timeLeft--;
+                if (timeLeft) {
+                    spend += 1;
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    displayResults();
+                }
+                updateTimerDisplay(timeLeft, spend);
+            }, 1000);
+        }
+
+        function updateTimerDisplay(seconds, spendseco) {
+            const timespend = document.getElementById('spend');
+            const timerElement = document.getElementById('timer');
+            if (timespend) {
+                const sminutes = Math.floor(spendseco / 60);
+                const spendseconds = spendseco % 60;
+                timespend.textContent = `Time spent:${sminutes}m ${spendseconds}s`;
+            }
+
+            if (timerElement) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                timerElement.textContent = `Time Left: ${minutes}m ${remainingSeconds}s`;
+            }
+        }
+
+
+
+
+        function selectAnswer(index) {
+            const userAnswer = questions[currentQuestionIndex]?.options[index];
+            const correctAnswer = questions[currentQuestionIndex]?.correctAnswer;
+            userAnswers.push({
+                question: questions[currentQuestionIndex]?.question,
+                userAnswer,
+                correctAnswer,
+            });
+            if (userAnswer === correctAnswer) {
+                marks++;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                updateQuiz();
+            } else {
+
+                displayResults();
+            }
+        }
+        window.onload = startTimer();
+        function updateQuiz() {
+            document.body.innerHTML = `
+                <div class="container" >
+                    <div class="quiz-box">
+                        <h1>Quiz</h1>
+                        <div class="quiz-header">
+                            <h1><span>CST-2242</span></h1>
+                            <span id="timer" class="header-score"></span>
+                            <span class="header-score class="text-primary">Score: ${marks}/${questions.length}</span>
+                        </div>
+                        <div id="spend" class="header-score"></div>
+                        <div class="quiz-question">
+                            <p>${questions[currentQuestionIndex]?.question}</p>
+                        </div>
+                        <div class="options-list">
+                            ${questions[currentQuestionIndex]?.options.map((option, index) => `
+                                <button onclick="selectAnswer(${index})">${option}</button>
+                            `).join('')}
+                        </div>
+                        <div class="quiz-footer">
+                            <span class="question-total">${currentQuestionIndex + 1} of ${questions.length} questions</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        function displayResults() {
+            clearInterval(timer); // Stop the timer
+            submitTotalMarks();
+            document.body.innerHTML = `<body class="bg-success-subtle">
+            <center >
+                <div class="container-fluid col-md-6 col-sm-4 style="max-height: 1000px; overflow-y: auto;">
+                    <div class="quiz-box">
+                        <h1>Quiz</h1>
+                        <div class="quiz-header">
+                            <h1><span>CST-2242</span></h1>
+                            <span class="header-score ">Score: ${marks}<span><span class="header-score ">/${questions.length}</span>
+                        </div>
+                        <div class="results-container ">
+                            <h2>Results</h2>
+                            ${userAnswers.map((answer, index) => `
+                                <div class="question-result">
+                                    <h3>Question ${index + 1}</h3>
+                                    <div class="result-details">
+                                        <p class="text-primary"><strong>Question:</strong>${answer.question}</p>
+                                        <p><strong>Your Answer:</strong> ${answer.userAnswer}</p>
+                                        <p class="text-success"><strong>Correct Answer:</strong> ${answer.correctAnswer}</p>
+                                        <hr class="bg-dark h-25">
+                                    </div>
+                                </div>
+                            `).join('')}
+                            <div class="total-results">
+                                <p>Total Questions: ${questions.length}</p>
+                                <p>Total Marks: ${marks}</p>
+                                <a href="home" class="text-white btn btn-primary" style="text-decoration:none;">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </center>
+              <body>
+            `;
+
+            if (marks == 10) {
+                Swal.fire({
+                    title: 'Outstanding',
+                    icon: 'star',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-out' // Add your custom background class
+                    }
+                });
+            }
+            else if (marks >= 8) {
+                Swal.fire({
+                    title: 'Excellent',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-excellent' // Add your custom background class
+                    }
+                });
+            } else if (marks < 8 && marks >= 5) {
+                Swal.fire({
+                    title: 'Good',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-good' // Add your custom background class
+                    }
+                });
+            } else if (marks <= 4) {
+                Swal.fire({
+                    title: 'You need to try!',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-try' // Add your custom background class
+                    }
+                });
+            }
+        }
+        updateQuiz();
+
+        function submitTotalMarks() {
+            var cid = `<%=cid%>`;
+            var cname = `<%=cname%>`;
+            var uid = `<%=uid%>`;
+            fetch('/totalmarks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cid, cname, uid, marks }) // Correctly stringify the JSON object
+            })
+                .then(response => {
+                    console.log('Total marks submitted successfully.');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+
+</html>

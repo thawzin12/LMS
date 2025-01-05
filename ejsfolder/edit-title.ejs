@@ -1,0 +1,84 @@
+<%- include('teacherheader.ejs') %>
+<main>
+
+    <div class="container-fluid px-4">
+
+        <div class="row m-2">
+            <div class="col-12">
+                <div class="card border-primary">
+
+                    <div class="container mt-4">
+                        <h1 class="mb-4 card-title">Edit Title</h1>
+                        <form action="/update-title/<%= title.title_id %>" method="POST" id="edit-title-form">
+                            <div class="mb-3">
+                                <label for="title_name" class="form-label">Title Name:</label>
+                                <input type="text" class="form-control" id="title_name" name="title_name"
+                                    value="<%= title.title_name %>">
+                            </div>
+
+                            <div id="questions-container">
+                                <% questions.forEach((question, qIndex) => { %>
+                                <div class="question-block">
+                                    <h3>Question <%= qIndex + 1 %>:</h3>
+                                    <div class="mb-3">
+                                        <label for="question_<%= question.question_id %>" class="form-label">Question
+                                            Text:</label>
+                                        <textarea class="form-control" id="question_<%= question.question_id %>"
+                                            name="questions[<%= qIndex %>][text]"
+                                            rows="3"><%= question.question_text %></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="marks_<%= question.question_id %>" class="form-label">Marks:</label>
+                                        <input type="number" class="form-control" id="marks_<%= question.question_id %>"
+                                            name="questions[<%= qIndex %>][marks]" value="<%= question.marks %>">
+                                    </div>
+
+                                    <div class="choices-container">
+                                        <h4>Choices:</h4>
+                                        <% question.choices.forEach((choice, cIndex) => { %>
+                                        <div class="mb-2 choice-block">
+                                            <label for="choice_<%= choice.choice_id %>" class="form-label">Choice
+                                                <%= cIndex + 1 %>:</label>
+                                            <input type="text" class="form-control"
+                                                name="questions[<%= qIndex %>][choices][<%= cIndex %>][text]"
+                                                value="<%= choice.choice_text %>">
+                                            <input type="checkbox"
+                                                name="questions[<%= qIndex %>][choices][<%= cIndex %>][correct]"
+                                                <%= choice.is_correct ? 'checked' : '' %> class="form-check-input">
+                                            Correct
+
+                                        </div>
+                                        <% }); %>
+
+                                    </div>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+<%- include('teacherbottom.ejs') %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="/static/teacher/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/static/teacher/assets/demo/chart-area-demo.js"></script>
+<script src="/static/teacher/assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="/static/teacher/js/datatables-simple-demo.js"></script>
+<!-- <script src="/static/js/bootstrap.bundle.min.js"></script> -->
+<script src="/static/js/jquery.min.js"></script>
+
+</body>
+
+</html>

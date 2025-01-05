@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entertainment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/quiz.css">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<body>
+    <script>
+        const questions = [
+            {
+                question: 'In Titanic movie, what is the valuable object that the actress dropped into the ocean?',
+                options: ['A ring', 'A necklace',
+                    'A way to store and organize data', 'A jewellery box'],
+                correctAnswer: 'A necklace'
+            },
+
+            {
+                question: " Who is batman's enemy?",
+                options: ['The Joker', 'Superman', 'Hello Kitty'],
+                correctAnswer: 'The Joker'
+            },
+
+            {
+                question: 'What do BTS fans call themselves?',
+                options: ['Swifties', 'Blink', 'ARMY'],
+                correctAnswer: 'ARMY'
+            },
+
+            {
+                question: 'Who is a Chinese actor?',
+                options: ['Brad Pitt', 'Tom Cruise', 'Jackie Chan'],
+                correctAnswer: 'Jackie Chan'
+            },
+            {
+                question: 'Point out the horror movie',
+
+                options: ['Mean Girls', 'A Quiet Place', 'Do Revenge'],
+                correctAnswer: 'A Quiet Place'
+            },
+            {
+                question: 'Who is a member of BTS?',
+                options: ['Chanyeol', 'Nicki Minaj', 'Jungkook'],
+                correctAnswer: 'Jungkook'
+            },
+            {
+                question: 'Choose the he famous levitation spell in Harry Potter',
+                options: ['Wingardium Leviosa',
+                    'Bibbidi-Bobbidi-Boo', 'fly away my little akuma'],
+                correctAnswer: 'fly away my little akuma'
+            },
+            {
+                question: 'What did Snow White eat in the fairytale?',
+                options: ['Ginger bread', 'Poisoned apple', 'Poisoned mushrooms'],
+                correctAnswer: 'Poisoned apple'
+            },
+            {
+                question: 'Which of the following is Country Music?',
+                options: ['Happy', 'Levitating',
+                    'Take Me Home, Country Roads'],
+                correctAnswer: 'Take Me Home, Country Roads'
+            },
+            {
+                question: 'Which movie has tall and blue skin aliens?',
+                options: ['Cinderella', 'Avatar', 'Minions'],
+                correctAnswer: 'Avatar'
+            }
+        ]
+
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        shuffleArray(questions);
+        let currentQuestionIndex = 0;
+        let marks = 0;
+        let userAnswers = [];
+        function selectAnswer(index) {
+            const userAnswer = questions[currentQuestionIndex]?.options[index];
+            const correctAnswer = questions[currentQuestionIndex]?.correctAnswer;
+
+            userAnswers.push({
+                question: questions[currentQuestionIndex]?.question,
+                userAnswer,
+                correctAnswer,
+            });
+            if (userAnswer === correctAnswer) {
+                marks++;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) { updateQuiz(); } else { displayResults(); }
+        } function updateQuiz() {
+            document.body.innerHTML = ` <div class="container">
+        <div class="quiz-box">
+            <h1>Quiz</h1>
+            <div class="quiz-header">
+                <h1><span>Entertainment</span></h1>
+                <span class="header-score">Score: ${marks}/${questions.length}</span>
+            </div>
+            <div class="quiz-question">
+                <p>${questions[currentQuestionIndex]?.question}</p>
+            </div>
+            <div class="options-list">
+                ${questions[currentQuestionIndex]?.options.map((option, index) => `
+                <button onclick="selectAnswer(${index})">${option}</button>
+                `).join('')}
+            </div>
+            <div class="quiz-footer">
+                <span class="question-total">${currentQuestionIndex + 1} of ${questions.length} question</span>
+            </div>
+        </div>
+        </div>
+        `;
+        }
+
+        function displayResults() {
+            document.body.innerHTML = `
+            <center>
+        <div class="container-fluid">
+            <div class="quiz-box">
+                <h1>Quiz</h1>
+                <div class="quiz-header">
+                    <h1><span>Entertainment</span></h1>
+                    <span class="header-score">Score: ${marks}<span><span
+                                class="header-score">/${questions.length}</span>
+                </div>
+                <div class="results-container">
+                    <h2>Results</h2>
+                    ${userAnswers.map((answer, index) => `
+                    <div class="question-result">
+                        <h3>Question ${index + 1}</h3>
+                        <div class="result-details">
+                            <p class="text-primary"><strong>Question:</strong>${answer.question}</p>
+                            <p><strong>Your Answer:</strong> ${answer.userAnswer}</p>
+                            <p class="text-success"><strong>Correct Answer:</strong> ${answer.correctAnswer}</p>
+                            <hr class="bg-dark h-25">
+                        </div>
+                    </div>
+                    `).join('')}
+                    <div class="total-results">
+                        <p>Total Questions: ${questions.length}</p>
+                        <p>Total Marks: ${marks}</p>
+                        <a href="studenthome" class="text-white btn btn-primary" style="text-decoration:none;">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </center>
+        `;
+
+            if (marks == 10) {
+                Swal.fire({
+                    title: 'Outstanding',
+                    icon: 'star',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-out' // Add your custom background class
+                    }
+                });
+            }
+            else if (marks >= 8) {
+                Swal.fire({
+                    title: 'Excellent',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-excellent' // Add your custom background class
+                    }
+                });
+            } else if (marks < 8 && marks >= 5) {
+                Swal.fire({
+                    title: 'Good',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-good' // Add your custom background class
+                    }
+                });
+            } else if (marks <= 4) {
+                Swal.fire({
+                    title: 'You need to try!',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-try' // Add your custom background class
+                    }
+                });
+            }
+        }
+        updateQuiz();
+    </script>
+
+</body>
+
+</html>

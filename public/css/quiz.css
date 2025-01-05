@@ -1,0 +1,140 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-box {
+    width: 500px;
+    background-color: #fff;
+    border: 2px solid #3498db;
+    border-radius: 6px;
+    padding: 20px 30px;
+}
+
+
+.bg-excellent,
+.bg-out {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.bg-good {
+    background-color: #2196F3;
+    color: white;
+}
+
+.bg-try {
+    background-color: #FFC107;
+    color: black;
+}
+
+
+h1 {
+    font-size: 32px;
+    text-align: center;
+    background: linear-gradient(45deg, transparent, #3498db, transparent);
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 2px solid #3498db;
+    margin-bottom: 15px;
+}
+
+.quiz-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+
+.header-score {
+    background: #3498db;
+    color: #fff;
+    padding: 7px;
+    border-radius: 3px;
+}
+
+.quiz-question p {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.options-list button {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    font-size: 17px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.options-list button:hover {
+    background: #3498db;
+    color: #fff;
+}
+
+.result-details p,
+.total-results p {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+@media(max-width:576px) {
+
+    .result-details p,
+    .total-results p {
+        font-size: 1.6em;
+        font-weight: 500;
+    }
+}
+
+.quiz-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid #3498db;
+    padding-top: 15px;
+    margin-top: 20px;
+}
+
+.question-total {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.next-btn {
+    width: 100px;
+    height: 40px;
+    background: #3498db;
+    border: 2px solid #3498db;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.next-btn:hover {
+    background: #2071a7;
+    border-color: #2071a7;
+}

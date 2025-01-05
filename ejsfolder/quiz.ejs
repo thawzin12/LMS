@@ -1,0 +1,173 @@
+<%- include('studenttophtml'); %>
+<title>Quiz</title>
+<%- include('studentheaderlink'); %>
+<style>
+    .quiz-header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .quiz-question {
+        margin: 20px 0;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+    }
+
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .timer-display {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #dc3545;
+    }
+
+    .question-block {
+        display: none;
+    }
+
+    .question-block.active {
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .quiz-question {
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .navigation-buttons {
+            flex-direction: column;
+        }
+
+        .navigation-buttons button {
+            margin-bottom: 10px;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <main>
+        <%- include('studentnavbar'); %>
+        <section class="hero-section">
+            <div class="container mt-5">
+                <div class="quiz-header text-center">
+                    <h1>Quiz</h1>
+                    <p class="timer-display">Time Left: <span id="timer"></span></p>
+                </div>
+
+                <input type="hidden" name="durationTime" id="durationTime" value="<%= durationTime %>">
+                <input type="hidden" name="totalQuestions" id="totalQuestions" value="<%= totalQuestions %>">
+
+                <form id="quizForm" action="/submit-quiz/<%= title.title_id %>" method="POST">
+                    <input type="hidden" name="startTime" value="<%= new Date().getTime() %>">
+
+                    <div id="question-container">
+                        <% questions.forEach((question, index) => { %>
+                        <div class="question-block <%= index === 0 ? 'active' : '' %>"
+                            data-question-index="<%= index %>">
+                            <div class="quiz-question">
+                                <p class="text-dark font-weight-bold"><strong>Question <%= index + 1 %>:
+                                        <%= question.question_text %></strong></p>
+                                <% question.choices.forEach(choice => { %>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                        name="question_<%= question.question_id %>" value="<%= choice.choice_id %>"
+                                        id="choice_<%= choice.choice_id %>">
+                                    <label class="form-check-label font-weight-bold text-dark"
+                                        for="choice_<%= choice.choice_id %>">
+                                        <%= choice.choice_text %>
+                                    </label>
+                                </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+
+                    <div class="navigation-buttons mt-4">
+                        <button type="button" id="prevButton" class="btn btn-secondary" disabled>Previous</button>
+                        <button type="button" id="nextButton" class="btn btn-primary">Next</button>
+                        <button type="submit" id="submitButton" class="btn btn-success" style="display:none;">Submit
+                        </button>
+                    </div>
+                </form>
+
+                <!-- <div class="text-center mt-4">
+                    <a href="/studenthome" class="btn btn-warning">Back to Courses</a>
+                </div> -->
+            </div>
+        </section>
+
+        <%- include('studentfooter'); %>
+    </main>
+    <%- include('studentfooterlink'); %>
+    <script>
+        const totalQuestions = document.getElementById('totalQuestions').value;
+        const durationTime = document.getElementById('durationTime').value * 1000;
+        let timeLeft = durationTime / 1000;
+        let currentQuestionIndex = 0;
+
+        function updateTimer() {
+            const timerElement = document.getElementById('timer');
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes}m ${seconds}s`;
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prevButton').disabled = (currentQuestionIndex === 0);
+            if (currentQuestionIndex === totalQuestions - 1) {
+                document.getElementById('nextButton').style.display = 'none';
+                document.getElementById('submitButton').style.display = 'inline-block';
+            } else {
+                document.getElementById('nextButton').style.display = 'inline-block';
+                document.getElementById('submitButton').style.display = 'none';
+            }
+        }
+
+        function showQuestion(index) {
+            const allQuestions = document.querySelectorAll('.question-block');
+            allQuestions.forEach((block, i) => {
+                block.classList.remove('active');
+                if (i === index) {
+                    block.classList.add('active');
+                }
+            });
+            currentQuestionIndex = index;
+            updateNavigationButtons();
+        }
+
+        document.getElementById('nextButton').addEventListener('click', () => {
+            if (currentQuestionIndex < totalQuestions - 1) {
+                showQuestion(currentQuestionIndex + 1);
+            }
+        });
+
+        document.getElementById('prevButton').addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
+            }
+        });
+
+        setInterval(() => {
+            timeLeft--;
+            updateTimer();
+            if (timeLeft <= 0) {
+                document.getElementById('quizForm').submit();
+            }
+        }, 1000);
+
+        updateTimer();
+        updateNavigationButtons();
+    </script>
+</body>
+
+</html>

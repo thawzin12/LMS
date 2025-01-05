@@ -1,0 +1,98 @@
+<%- include('admintop.ejs') %>
+<%- include('adminheader.ejs') %>
+<%- include('adminsidebar.ejs') %>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/adminhome">Home</a></li>
+                <li class="breadcrumb-item">Manage Subject</li>
+                <li class="breadcrumb-item active"><a href="courses">
+                        View Subject
+                    </a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">View Subjects</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="datatablesSimple" class="table table-striped table-bordered">
+                        <thead class="bg-dark">
+                            <tr>
+                                <th class='text-white'>NO.</th>
+                                <th class='text-white'>Subject Code</th>
+                                <th class='text-white'>Subject Name</th>
+                                <th class='text-white'>Year</th>
+                                <th class='text-white'>Semester Name</th>
+                                <th class="text-center text-white">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% courses.forEach((course,index) => { %>
+                            <tr>
+                                <td><%=  ++index %></td>
+                                <td><%= course.course_code %></td>
+                                <td><%= course.course_name %></td>
+                                <td><%= course.Grade.grade_name %></td>
+                                <td><%= course.Semester.semester_name %></td>
+                                <td class="text-center">
+                                    <form action="/admin/courses/delete/<%= course.course_code %>" method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this subject?');"
+                                        style="display:inline-block;">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash-fill"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+
+<%- include('adminfooter.ejs') %>
+<%- include('adminbottom.ejs') %>
+<!-- 
+<!-- Include DataTables CSS -->
+<!-- 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+<!-- Include DataTables JS -->
+<!--
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+ -->
+<!-- Initialize DataTables -->
+<script>
+    $(document).ready(function () {
+        $('#coursesTable').DataTable({
+            responsive: true,
+            autoWidth: false,
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthMenu: [10, 25, 50, 100],
+            pageLength: 10,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search courses..."
+            },
+            columnDefs: [
+                { orderable: false, targets: 4 } // Disable ordering on the Action column
+            ]
+        });
+    });
+</script>

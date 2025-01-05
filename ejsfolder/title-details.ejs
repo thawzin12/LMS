@@ -1,0 +1,63 @@
+<%- include('teacherheader.ejs') %>
+<main>
+
+    <div class="container-fluid px-4">
+
+        <div class="row m-3">
+            <div class="col-md-8 offset-md-2">
+                <div class="card border-success border-2 rounded rounded-4">
+                    <div class="card-header fs-5 text-center text-success">
+                        Title Details
+                    </div>
+                    <div class="container mt-4">
+                        <h2 class="mb-4"> <%= title.title_name %></h2>
+                        <div class="card mb-4 rounded rounded-5 border-primary">
+                            <div class="card-body">
+                                <h3 class="card-title">Questions</h3>
+                                <p class="card-text">
+
+                                <ul class="list-group">
+                                    <% questions.forEach((question,index) => { %>
+                                    <li class="list-group-item"><span
+                                            class='me-3'><%= ++index %>.</span><%= question.question_text %>
+                                    </li>
+                                    <% }); %>
+                                </ul>
+                                </p>
+                                <form action="/delete-title/<%= title.title_id %>" method="get">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Delete Title
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <strong>End Time:</strong> <%= title.end_time %>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+<%- include('teacherbottom.ejs') %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="/static/teacher/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/static/teacher/assets/demo/chart-area-demo.js"></script>
+<script src="/static/teacher/assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="/static/teacher/js/datatables-simple-demo.js"></script>
+<!-- <script src="/static/js/bootstrap.bundle.min.js"></script> -->
+<script src="/static/js/jquery.min.js"></script>
+
+</body>
+
+</html>

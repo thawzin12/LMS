@@ -1,0 +1,99 @@
+<%- include('admintop.ejs') %>
+<%- include('adminheader.ejs') %>
+<%- include('adminsidebar.ejs') %>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><span><a href="/admin/adminhome">Home</a></span></li>
+                <li class="breadcrumb-item">Manage Teacher</li>
+                <li class="breadcrumb-item active"><a href="/admin/view-teachers">View Teachers</a></li>
+                <li class="breadcrumb-item active"><a href="#">Details</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <h1>Teacher Details</h1>
+
+    <% if (success) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+
+    <% if (error) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Details for <%= teacher.name %></h5>
+
+                        <p><strong>Email:</strong> <%= teacher.email %></p>
+
+                        <h6>Assigned Duties</h6>
+
+                        <!-- Make the table responsive -->
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered
+                                datatablesSimple" id="dutyTable">
+                                <thead>
+                                    <tr>
+                                        <th>NO.</th>
+                                        <th>Grade</th>
+                                        <th>Semester</th>
+                                        <th>Section</th>
+                                        <th>Course</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% teacher.Taughts.forEach((duty, index) => { %>
+                                    <tr>
+                                        <td><%= ++index %></td>
+                                        <td><%= duty.Grade.grade_name %></td>
+                                        <td><%= duty.Semester.semester_name %></td>
+                                        <td><%= duty.Section.section_name %></td>
+                                        <td><%= duty.Course.course_name %></td>
+                                        <td>
+                                            <form action="/admin/delete-duty/<%= duty.id %>" method="POST"
+                                                style="display:inline;">
+                                                <button type="submit"
+                                                    class="btn btn-outline-danger text-center">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div> <!-- End .table-responsive -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('adminfooter.ejs') %>
+<%- include('adminbottom.ejs') %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#dutyTable').DataTable({
+            responsive: true, // Enable responsive design
+            autoWidth: false, // Disable automatic column width calculation to prevent issues on smaller screens
+            paging: true, // Enable pagination
+            searching: true, // Enable searching
+            ordering: true, // Enable column ordering
+            info: true, // Show table information
+        });
+    });
+</script>

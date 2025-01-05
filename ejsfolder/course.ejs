@@ -1,0 +1,51 @@
+<%- include('studenttophtml'); %>
+<title>Computer University Home</title>
+<%- include('studentheaderlink'); %>
+
+<body>
+    <main>
+        <%- include('studentnavbar'); %>
+        <section class="hero-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <div class="text-center mb-5 pb-2">
+                            <h4 class="text-dark">Course Titles</h4>
+                        </div>
+
+                        <% if (titles.length > 0) { %>
+                        <ul class="list-group">
+                            <% titles.forEach(title => { %>
+                            <li class="list-group-item mb-3 list-group-item-action">
+                                <h6><%= title.title_name %></h6>
+                                <p class='text-dark'>Start: <%= title.start_time %>, End: <%= title.end_time %></p>
+                                <form action="/title" method="POST">
+                                    <input type="hidden" name="title_id" value="<%= title.title_id %>">
+                                    <button type="submit" class="btn btn-primary">View Questions</button>
+                                </form>
+                            </li>
+                            <% }) %>
+                        </ul>
+                        <% } else { %>
+                        <ul class="list-group">
+                            <li class="list-group-item h-25 text-center">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                No titles available for this course in your section.
+                            </li>
+                        </ul>
+                        <% } %>
+
+                        <div class="text-center mt-4">
+                            <a href="/studenthome" class="btn btn-secondary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include('studentfooter'); %>
+    </main>
+    <%- include('studentfooterlink'); %>
+</body>
+
+</html>

@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>computer university home</title>
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Sono:wght@200;300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="static/css/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+
+    <link href="static/css/templatemo-pod-talk.css" rel="stylesheet">
+    <style>
+        li {
+            font-weight: bold
+        }
+
+        .lin {
+            text-decoration: none;
+        }
+
+        .waa {
+            max-width: 300px;
+            min-height: auto;
+            min-width: 50px;
+        }
+
+        .hay {
+            border-radius: 50%;
+            max-width: 60px;
+
+        }
+
+        .head {
+            font-size: 20px;
+            font-weight: bold;
+            color: blue;
+        }
+
+        @media (max-width:768px) {
+            .hay {
+                width: 40px;
+            }
+
+            .head {
+                font-size: 12px;
+
+            }
+
+        }
+
+        @media(max-width:400) {
+            .hay {
+                width: 30px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <main>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand me-lg-5 me-0" href="home">
+                    <img src="static/images/logo.avif" class="logo-image img-fluid hay" alt="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active head" href="home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" head href="about">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
+                            <ul class="dropdown-menu">
+                                <li class="text-success head"><%=info.in%></li>
+                                <li><a class="dropdown-item head" href="updatepassword">Update Password</a></li>
+                                <li><a class="dropdown-item head" href="logout">Logout</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link head" href="#contact">Contact</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="hero-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <div class="text-center mb-5 pb-2">
+                            <h1 class="text-white">Welcome Computer University Magway</h1>
+                            <p class="text-white">Our application will help you to improve your knowledge. </p>
+                        </div>
+                        <div class="owl-carousel owl-theme">
+                            <div class="owl-carousel-info-wrap item">
+                                <a href="/english">
+                                    <img src="static/images/english.jpg" class="owl-carousel-image img-fluid" alt="">
+                                </a>
+                                <div class="owl-carousel-info">
+                                    <h5 class="mb-2">
+                                        <a href="/english">
+                                            English
+                                        </a>
+                                        <img src="static/images/verified.png"
+                                            class="owl-carousel-verified-image img-fluid" alt="">
+                                    </h5>
+                                    <span class="badge">Course</span>
+                                </div>
+                            </div>
+                            <div class="owl-carousel-info-wrap item">
+                                <a href="/datastructure">
+                                    <img src="static/images/DSA.jpg" class="owl-carousel-image img-fluid"
+                                        alt="data structures">
+                                </a>
+                                <div class="owl-carousel-info">
+                                    <h5 class="mb-2">
+                                        <a href="/datastructure">
+                                            Data Structure and Algorithms
+                                        </a>
+                                        <img src="static/images/verified.png"
+                                            class="owl-carousel-verified-image img-fluid" alt="">
+                                    </h5>
+                                    <span class="badge">Course</span>
+                                </div>
+                            </div>
+
+                            <div class="owl-carousel-info-wrap item">
+                                <a href="/mathematics">
+                                    <img src="static/images/mathematics.jpg" class="owl-carousel-image img-fluid"
+                                        alt="mathematics">
+                                </a>
+                                <div class="owl-carousel-info">
+                                    <h4 class="mb-2">
+                                        <a href="/mathematics">
+                                            Linear Algebra
+                                        </a>
+                                        <img src="static/images/verified.png"
+                                            class="owl-carousel-verified-image img-fluid" alt="">
+                                    </h4>
+                                    <span class="badge">Course</span>
+                                </div>
+                            </div>
+
+                            <div class="owl-carousel-info-wrap item">
+                                <a href="/softwareengineering">
+                                    <img src="static\images\softwarengineer.jpg" class="owl-carousel-image img-fluid"
+                                        alt="softwarengineer">
+                                </a>
+
+                                <div class="owl-carousel-info">
+                                    <h4 class="mb-2">
+                                        <a href="/softwareengineering">
+                                            Software Engineering
+                                        </a>
+                                        <img src="static/images/verified.png"
+                                            class="owl-carousel-verified-image img-fluid" alt="">
+                                    </h4>
+                                    <span class="badge">Course</span>
+                                </div>
+                            </div>
+
+                            <div class="owl-carousel-info-wrap item">
+                                <a href="/javascript">
+                                    <img src="static/images/JS.jpg" class="owl-carousel-image img-fluid" alt="">
+                                </a>
+                                <div class="owl-carousel-info">
+                                    <h5 class="mb-2">
+                                        <a href="/javascript">
+                                            Web Technology(JS)
+                                        </a>
+
+                                        <img src="static/images/verified.png"
+                                            class="owl-carousel-verified-image img-fluid" alt="">
+                                    </h5>
+                                    <span class="badge">Course</span>
+                                </div>
+                            </div>
+
+                            <div class="owl-carousel-info-wrap item">
+                                <a href="/java">
+                                    <img src="static/images/j2ee.jpg" class="owl-carousel-image img-fluid" alt="">
+                                </a>
+                                <div class="owl-carousel-info">
+                                    <h5 class="mb-2">
+                                        <a href="/java">
+                                            Advanced Java Programming
+                                        </a>
+                                        <img src="static/images/verified.png"
+                                            class="owl-carousel-verified-image img-fluid" alt="">
+                                    </h5>
+                                    <span class="badge">Course</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        
+        <section class="topics-section section-padding pb-0" id="section_3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <div class="section-title-wrap mb-5">
+                            <h4 class="section-title">More Support Topics</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                        <div class="custom-block custom-block-overlay">
+                            <a href="international" class="custom-block-image-wrap">
+                                <img src="static/images/inter.jpeg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                            <div class="custom-block-info custom-block-overlay-info">
+                                <h4 class="mb-1">
+                                    <a href="international">
+                                        International
+                                    </a>
+                                </h4>
+                                <p class="badge mb-0">Episodes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                        <div class="custom-block custom-block-overlay">
+                            <a href="generalknowledge" class="custom-block-image-wrap">
+                                <img src="static/images/general.jpeg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                            <div class="custom-block-info custom-block-overlay-info">
+                                <h4 class="mb-1">
+                                    <a href="generalknowledge">
+                                        General
+                                    </a>
+                                </h4>
+                                <p class="badge mb-0">Episodes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                        <div class="custom-block custom-block-overlay">
+                            <a href="health" class="custom-block-image-wrap">
+                                <img src="static/images/health.jpeg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                            <div class="custom-block-info custom-block-overlay-info">
+                                <h4 class="mb-1">
+                                    <a href="health">
+                                        Health
+                                    </a>
+                                </h4>
+                                <p class="badge mb-0">Episodes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+                        <div class="custom-block custom-block-overlay">
+                            <a href="entertainment" class="custom-block-image-wrap">
+                                <img src="static/images/entertain.jpeg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                            <div class="custom-block-info custom-block-overlay-info">
+                                <h4 class="mb-1">
+                                    <a href="entertainment">
+                                        Entertainment
+                                    </a>
+                                </h4>
+                                <p class="badge mb-0">Episodes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-4 col-12 mb-5 mb-lg-0">
+
+                    <img src="static/images/paradise.png" class="waa" alt="fa">
+
+                </div>
+
+                <div class="col-lg-3 col-md-8 col-12 mb-4 mb-md-0 mb-lg-0">
+                    <h6 class="site-footer-title mb-3" id="contact">Contact</h6>
+
+                    <p class="mb-2"><strong class="d-inline me-2">Phone:</strong> 09970774831</p>
+
+                    <p>
+                        <strong class="d-inline me-2">Email:</strong>
+                        <a href=" mailto:thawhtet077@gmail.com">thawhtet077@gmail.com</a>
+
+                    </p>
+                    <p><strong class="d-inline me-2"><a href="feedback">Feedback</a></strong></p>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+
+
+                    <div class="site-footer-thumb mb-4 pb-2">
+                        <div class="d-flex flex-wrap">
+                            <a href="#">
+                                <img src="static/images/app-store.png" class="me-3 mb-2 mb-lg-0 img-fluid" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="static/images/play-store.png" class="img-fluid" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <h6 class="site-footer-title mb-3 text-dark">Social</h6>
+                    <ul class="social-icon">
+
+                        <li class="social-icon-item">
+                            <a href="https://www.youtube.com/@Hyperthaw" class="social-icon-link bi bi-youtube "></a>
+                        </li>
+
+                        <li class="social-icon-item">
+                            <a href="https://www.facebook.com/thaw.htet.6645211"
+                                class="social-icon-link bi-facebook "></a>
+                        </li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container pt-5">
+            <div class="row align-items-center">
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <a class="navbar-brand" href="home">
+                        <img src="static/images/logo.avif" class="logo-image img-fluid" alt="templatemo pod talk">
+                    </a>
+                </div>
+
+                <div class="col-lg-7 col-md-4 col-12">
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a href="home" class="site-footer-link text-dark">Homepage</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <p class="copyright-text mb-0">Copyright © 2023 Paradise</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/owl.carousel.min.js"></script>
+    <script src="static/js/custom.js"></script>
+
+</body>
+
+</html>

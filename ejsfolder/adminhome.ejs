@@ -1,0 +1,213 @@
+<%- include ('admintop.ejs') %>
+<%- include ('adminheader.ejs') %>
+<%- include ('adminsidebar.ejs') %>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="adminhome">Home</a></li>
+                <li class="breadcrumb-item active"><a href="adminhome">Dashboard</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Teachers Count Card -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card colog text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Teachers</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-chalkboard-teacher "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= teacherCount %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Teachers Count Card -->
+
+            <!-- First Year - Semester 1 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-warning text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">First Year Students | Semester 1</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-book "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= firstYearSemester1Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End First Year - Semester 1 Card -->
+
+            <!-- First Year - Semester 2 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-warning text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">First Year Students | Semester 2</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-book-reader "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= firstYearSemester2Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End First Year - Semester 2 Card -->
+
+            <!-- Second Year - Semester 1 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Second Year Students | Semester 1</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-book-open "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= secondYearSemester1Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Second Year - Semester 1 Card -->
+
+            <!-- Second Year - Semester 2 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Second Year Students | Semester 2</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-user-check "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= secondYearSemester2Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Second Year - Semester 2 Card -->
+
+            <!-- Third Year - Semester 1 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card  text-white mb-4" style='background-color: orange;'>
+                    <div class="card-body">
+                        <h5 class="card-title">Third Year Students | Semester 1</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-users "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= thirdYearSemester1Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Third Year - Semester 1 Card -->
+
+            <!-- Third Year - Semester 2 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-danger text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Third Year Students | Semester 2</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= thirdYearSemester2Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Third Year - Semester 2 Card -->
+
+            <!-- Fourth Year - Semester 1 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Fourth Year Students | Semester 1</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-users "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= fourthYearSemester1Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Fourth Year - Semester 1 Card -->
+
+            <!-- Fourth Year - Semester 2 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Fourth Year Students | Semester 2</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-users-cog "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= fourthYearSemester2Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Fourth Year - Semester 2 Card -->
+
+            <!-- Fifth Year - Semester 1 -->
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-dark text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-white">Fifth Year Students | Semester 1</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas  fa-graduation-cap "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= fifthYearSemester1Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Fifth Year - Semester 1 Card -->
+
+            <!-- Fifth Year - Semester 2 -->
+            <div class="col-xl-4  col-md-6">
+                <div class="card bg-dark text-white mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-white">Fifth Year Students | Semester 2</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-user-graduate "></i>
+                            </div>
+                            <div class="ms-3">
+                                <h5><%= fifthYearSemester2Students %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Fifth Year - Semester 2 Card -->
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<%- include ('adminfooter.ejs') %>
+<%- include ('adminbottom.ejs') %>

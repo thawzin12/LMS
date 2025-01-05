@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>payment</title>
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" type="png/image" href="picture/logo.png">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        marquee {
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 0 auto;
+            color: white;
+            font-size: 26px;
+            padding: 10px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            animation: marqueeanimation;
+            z-index: 888;
+
+        }
+
+        .center {
+            width: 60%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-height: 100px;
+        }
+
+        .marq {
+            width: 100%;
+            background: #4cAF50;
+        }
+
+        @keyframes marqueeanimation {
+
+            0%,
+            25% {
+                transform: translate3d(-10px)
+            }
+
+            80% {
+                -webkit-text-stroke: wheat;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="marq">
+        <div class="center">
+            <marquee behavior="scrool" direction="" scroolamount="3">
+                Change password Successful!
+            </marquee>
+
+        </div>
+        <div class="center">
+            <marquee behavior="scrool" direction="right" scroolamount="3">
+                Welcome back Computer Magway CU!
+            </marquee>
+        </div>
+
+    </div>
+    <div class="container mt-3">
+        <center>
+            <button class="btn btn-success ">
+                <a href="/studenthome" class="text-white" style="text-decoration: none;">
+                    Go to Home</a></button>
+        </center>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<%- include('admintop.ejs') %>
+<%- include('adminheader.ejs') %>
+<%- include('adminsidebar.ejs') %>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><span><a href="adminhome">Home</a></span></li>
+                <li class="breadcrumb-item">Manage Teacher</li>
+                <li class="breadcrumb-item active"><a href="view-teachers">View Teacher</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <h1>View Teachers</h1>
+
+    <% if (successMessage) { %>
+    <div class="alert alert-success">
+        <marquee behavior="scroll" direction="left"><%= successMessage %></marquee>
+    </div>
+    <% } %>
+
+    <% if (errorMessage) { %>
+    <div class="alert alert-danger">
+        <marquee behavior="scroll" direction="left"><%= errorMessage %></marquee>
+    </div>
+    <% } %>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Teachers List</h5>
+
+                        <!-- Make the table responsive -->
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="datatablesSimple">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class='text-center'>NO.</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th class="text-center">Assigned Duties</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% teachers.forEach((teacher,index) => { %>
+                                    <tr>
+                                        <td class='text-center'><%= ++index %></td>
+                                        <td><%= teacher.name %></td>
+                                        <td><%= teacher.email %></td>
+                                        <td class='text-center'>
+                                            <a href="/admin/teacher-details/<%= teacher.teacher_id %>"
+                                                class="btn btn-sm btn-outline-info">
+                                                <i class="fas fa-info-circle"></i>
+                                                Details</a>
+                                        </td>
+                                        <td class='text-center'>
+                                            <form action="/admin/delete-teacher/<%= teacher.teacher_id %>" method="POST"
+                                                style="display:inline;">
+
+                                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        class="fas fa-trash-alt"></i>Delete</button>
+                                            </form>
+                                            <!-- Add a form for updating duty if needed -->
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div> <!-- End .table-responsive -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('adminfooter.ejs') %>
+<%- include('adminbottom.ejs') %>
+
+<!-- Include necessary JS for DataTables -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#teachersTable').DataTable({
+            responsive: true, // Enable responsive design
+            autoWidth: false, // Disable automatic column width calculation to prevent issues on smaller screens
+            paging: true, // Enable pagination
+            searching: true, // Enable searching
+            ordering: true, // Enable column ordering
+            info: true, // Show table information
+        });
+    });
+</script>

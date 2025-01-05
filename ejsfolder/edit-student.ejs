@@ -1,0 +1,110 @@
+<%- include('admintop.ejs') %>
+<%- include('adminheader.ejs') %>
+<%- include('adminsidebar.ejs') %>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/adminhome">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/view-students">View Students</a></li>
+                <li class="breadcrumb-item active">Edit Student</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-12 col-sm-10 col-md-8 offset-md-2 offset-lg-2">
+                <div class="card">
+                    <center>
+                        <% if (errors.roll_number) { %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <%= errors.roll_number %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <% } %>
+                    </center>
+
+                    <div class="card-body">
+                        <h2 class='text-primary text-center m-3  font-weight-bold'>Edit Student Information</h2>
+                        <form class="row g-3 needs-validation" action="/admin/edit-student/<%= student.student_id %>"
+                            method="POST" novalidate>
+                            <div class="col-md-12">
+                                <label for="roll_number" class="form-label">Roll Number</label>
+                                <input type="text" name="roll_number" id="roll_number" maxlength="225"
+                                    value="<%= student.roll_number %>" class="form-control" required>
+                                <div class="invalid-feedback">Roll number is required</div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="grade_id" class="form-label">Grade</label>
+                                <select name="grade_id" id="grade_id" class="form-select" required>
+                                    <% grades.forEach(grade => { %>
+                                    <option value="<%= grade.grade_id %>"
+                                        <%= student.grade_id == grade.grade_id ? 'selected' : '' %>>
+                                        <%= grade.grade_name %>
+                                    </option>
+                                    <% }) %>
+                                </select>
+                                <div class="invalid-feedback">Grade is required</div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="semester_id" class="form-label">Semester</label>
+                                <select name="semester_id" id="semester_id" class="form-select" required>
+                                    <% semesters.forEach(semester => { %>
+                                    <option value="<%= semester.semester_id %>"
+                                        <%= student.semester_id == semester.semester_id ? 'selected' : '' %>>
+                                        <%= semester.semester_name %>
+                                    </option>
+                                    <% }) %>
+                                </select>
+                                <div class="invalid-feedback">Semester is required</div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="section_id" class="form-label">Section</label>
+                                <select name="section_id" id="section_id" class="form-select" required>
+                                    <% sections.forEach(section => { %>
+                                    <option value="<%= section.section_id %>"
+                                        <%= student.section_id == section.section_id ? 'selected' : '' %>>
+                                        <%= section.section_name %>
+                                    </option>
+                                    <% }) %>
+                                </select>
+                                <div class="invalid-feedback">Section is required</div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-outline-primary">Update Student</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('adminfooter.ejs') %>
+<%- include('adminbottom.ejs') %>
+
+<script>
+    // Bootstrap form validation
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+    })();
+</script>

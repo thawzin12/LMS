@@ -1,0 +1,50 @@
+<%- include('header.ejs') %>
+<%- include('sidebar.ejs') %>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+        <div class="card mb-8">
+            <div class="card-header bg-success text-center text-white">
+                <i class="fas fa-table me-1"></i>
+                <h5>
+                    View Grade Score
+                </h5>
+
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th class="fs-5">Name</th>
+                            <th class="fs-5">Course code</th>
+                            <th class="fs-5">Course</th>
+                            <th class="fs-5">Marks</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th class="fs-5">Name</th>
+                            <th class="fs-5">Course code</th>
+                            <th class="fs-5">Course</th>
+                            <th class="fs-5">Marks</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <% users[0].forEach(user => { %>
+                        <tr>
+                            <td><%= user.uid %></td>
+                            <td><%= user.cid %></td>
+                            <td><%= user.cname %></td>
+                            <td><%= user.mark %></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include('footer.ejs') %>

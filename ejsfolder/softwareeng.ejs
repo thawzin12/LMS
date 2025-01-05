@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/quiz.css">
+    <style>
+
+    </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<body>
+    <script>
+        const questions = [
+            {
+                question: 'Software is defined as ___',
+                options: ['set of programs, documentation & configuration of data', 'documentation and configuration of data', 'None of the mentioned'],
+                correctAnswer: 'set of programs, documentation & configuration of data'
+            },
+
+            {
+                question: 'What is Software Engineering?',
+                options: ['Designing a software', 'Testing a software',
+                    'Application of engineering principles to the design a  software', 'None of the above'],
+                correctAnswer: 'Application of engineering principles to the design a  software'
+            },
+
+            {
+                question: ' Who is the father of Software Engineering?',
+                options: [' Margaret Hamilton', 'Watts S. Humphrey', ' Alan Turing', ' Boris Beizer'],
+                correctAnswer: 'Watts S. Humphrey'
+            },
+            {
+                question: 'What are the features of Software Code?',
+                options: ['Simplicity', 'Accessibility', 'Modularity', 'All of the above'],
+                correctAnswer: 'Modularity'
+            },
+            {
+                question: ' ____ is a software development activity that is not a part of software processes.',
+                options: ['Validation', 'Specification', 'Development', 'Dependence'],
+                correctAnswer: 'Dependence'
+            },
+            {
+                question: ' Define Agile scrum methodology.',
+                options: ['project management that emphasizes incremental progress', 'project management that emphasizes decremental progress', 'project management that emphasizes neutral progress', 'project management that emphasizes no progress'],
+                correctAnswer: 'project management that emphasizes incremental progress'
+            },
+
+            {
+                question: " ____ is defined as the process of generating analysis and designing documents?",
+                options: [' Re-engineering', 'Reverse engineering', 'Software re-engineering', ' Science and engineering'],
+                correctAnswer: 'Reverse engineering'
+            },
+
+            {
+                question: "What is a Functional Requirement?",
+                options: ['specifies the tasks the program must complete', 'specifies the tasks the program should not complete', 'specifies the tasks the program must not work', 'All of the mentioned'],
+                correctAnswer: 'specifies the tasks the program must complete'
+            },
+
+            {
+                question: "Attributes of good software is ____",
+                options: ['Development', 'Maintainability & functionality', ' Functionality', 'Maintainability'],
+                correctAnswer: 'Maintainability & functionality'
+            },
+
+            {
+                question: " ______ is not among the eight principles followed by the Software Code of Ethics and Professional Practice.",
+                options: ['PRODUCT', 'ENVIRONMENT', 'PUBLIC', 'PROFESSION'],
+                correctAnswer: 'ENVIRONMENT'
+            },
+
+            {
+                question: " _____ is not a fundamental activity for software processes in software development.",
+                options: ['Evolution', 'Design and implemenation', 'Validation', 'Verification'],
+                correctAnswer: 'Verification'
+            },
+
+            {
+                question: "  What does SDLC stands for?",
+                options: ['System Design Life Cycle', ' Software Design Life Cycle',
+                    'Software Development Life Cycle', ' System Development Life cycle'],
+                correctAnswer: 'Software Development Life Cycle'
+            }]
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        shuffleArray(questions);
+        let currentQuestionIndex = 0;
+        var marks = 0;
+        let userAnswers = [];
+        let timer; // Variable to store the timer
+        const overallTimeLimit = 600; // 5 minutes in seconds
+        var spend = 0;
+
+        function startTimer() {
+            let timeLeft = overallTimeLimit;
+            timer = setInterval(function () {
+                timeLeft--;
+                if (timeLeft) {
+                    spend += 1;
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    displayResults();
+                }
+                updateTimerDisplay(timeLeft, spend);
+            }, 1000);
+        }
+
+        function updateTimerDisplay(seconds, spendseco) {
+            const timespend = document.getElementById('spend');
+            const timerElement = document.getElementById('timer');
+            if (timespend) {
+                const sminutes = Math.floor(spendseco / 60);
+                const spendseconds = spendseco % 60;
+                timespend.textContent = `Time spent:${sminutes}m ${spendseconds}s`;
+            }
+
+            if (timerElement) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                timerElement.textContent = `Time Left: ${minutes}m ${remainingSeconds}s`;
+            }
+        }
+
+
+
+
+        function selectAnswer(index) {
+            const userAnswer = questions[currentQuestionIndex]?.options[index];
+            const correctAnswer = questions[currentQuestionIndex]?.correctAnswer;
+            userAnswers.push({
+                question: questions[currentQuestionIndex]?.question,
+                userAnswer,
+                correctAnswer,
+            });
+            if (userAnswer === correctAnswer) {
+                marks++;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                updateQuiz();
+            } else {
+
+                displayResults();
+            }
+        }
+        window.onload = startTimer();
+        function updateQuiz() {
+            document.body.innerHTML = `
+                <div class="container" >
+                    <div class="quiz-box">
+                        <h1>Quiz</h1>
+                        <div class="quiz-header">
+                            <h1><span>CST-2223</span></h1>
+                            <span id="timer" class="header-score"></span>
+                            <span class="header-score class="text-primary">Score: ${marks}/${questions.length}</span>
+                        </div>
+                        <div id="spend" class="header-score"></div>
+                        <div class="quiz-question">
+                            <p>${questions[currentQuestionIndex]?.question}</p>
+                        </div>
+                        <div class="options-list">
+                            ${questions[currentQuestionIndex]?.options.map((option, index) => `
+                                <button onclick="selectAnswer(${index})">${option}</button>
+                            `).join('')}
+                        </div>
+                        <div class="quiz-footer">
+                            <span class="question-total">${currentQuestionIndex + 1} of ${questions.length} questions</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        function displayResults() {
+            clearInterval(timer); // Stop the timer
+            submitTotalMarks();
+            document.body.innerHTML = `<body class="bg-success-subtle">
+            <center >
+                <div class="container-fluid col-md-6 col-sm-4 style="max-height: 1000px; overflow-y: auto;">
+                    <div class="quiz-box">
+                        <h1>Quiz</h1>
+                        <div class="quiz-header">
+                            <h1><span>CST-2223</span></h1>
+                            <span class="header-score ">Score: ${marks}<span><span class="header-score ">/${questions.length}</span>
+                        </div>
+                        <div class="results-container ">
+                            <h2>Results</h2>
+                            ${userAnswers.map((answer, index) => `
+                                <div class="question-result">
+                                    <h3>Question ${index + 1}</h3>
+                                    <div class="result-details">
+                                        <p class="text-primary"><strong>Question:</strong>${answer.question}</p>
+                                        <p><strong>Your Answer:</strong> ${answer.userAnswer}</p>
+                                        <p class="text-success"><strong>Correct Answer:</strong> ${answer.correctAnswer}</p>
+                                        <hr class="bg-dark h-25">
+                                    </div>
+                                </div>
+                            `).join('')}
+                            <div class="total-results">
+                                <p>Total Questions: ${questions.length}</p>
+                                <p>Total Marks: ${marks}</p>
+                                <a href="home" class="text-white btn btn-primary" style="text-decoration:none;">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </center>
+              <body>
+            `;
+
+            if (marks == 12) {
+                Swal.fire({
+                    title: 'Outstanding',
+                    icon: 'star',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-out' // Add your custom background class
+                    }
+                });
+            }
+            else if (marks >= 10) {
+                Swal.fire({
+                    title: 'Excellent',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-excellent' // Add your custom background class
+                    }
+                });
+            } else if (marks <= 10 && marks >= 5) {
+                Swal.fire({
+                    title: 'Good',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-good' // Add your custom background class
+                    }
+                });
+            } else if (marks <= 4) {
+                Swal.fire({
+                    title: 'You need to try!',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        background: 'bg-try' // Add your custom background class
+                    }
+                });
+            }
+        }
+        updateQuiz();
+
+        function submitTotalMarks() {
+            var cid = `<%=cid%>`;
+            var cname = `<%=cname%>`;
+            var uid = `<%=uid%>`;
+            fetch('/totalmarks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cid, cname, uid, marks }) // Correctly stringify the JSON object
+            })
+                .then(response => {
+                    console.log('Total marks submitted successfully.');
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+
+</html>

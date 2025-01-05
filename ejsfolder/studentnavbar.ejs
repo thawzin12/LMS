@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand me-lg-5 me-0" href="studenthome">
+            <img src="/static/logo.png" class="logo-image img-fluid hay" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link active head" href="/studenthome">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" head href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item head text-success" href="#"><%= uname %></a></li>
+                        <li><a class="dropdown-item head" href="/updatepassword">Update Password</a></li>
+                        <li><a class="dropdown-item head" href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link head" href="#contact">Contact</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>

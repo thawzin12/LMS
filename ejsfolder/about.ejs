@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+    <link rel="shortcut icon" href="static/images/logo.avif" type="image/x-icon">
+
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Sono:wght@200;300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="static/css/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+
+    <link href="static/css/templatemo-pod-talk.css" rel="stylesheet">
+    <style>
+        li {
+            font-weight: bold
+        }
+
+        .lin {
+            text-decoration: none;
+        }
+
+        .waa {
+            max-width: 300px;
+            min-height: auto;
+            min-width: 50px;
+        }
+
+        .hay {
+            border-radius: 50%;
+            max-width: 60px;
+
+        }
+
+        .head {
+            font-size: 20px;
+            font-weight: bold;
+            color: blue;
+        }
+
+        @media (max-width:768px) {
+            .hay {
+                width: 40px;
+            }
+
+            .head {
+                font-size: 12px;
+
+            }
+
+        }
+
+        @media(max-width:400) {
+            .hay {
+                width: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand me-lg-5 me-0" href="home">
+                <img src="static/logo.png" class="logo-image img-fluid hay" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-lg-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active head" href="/studenthome">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" head href="/about">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
+                        <ul class="dropdown-menu">
+                            <li class="text-success head"><%= uname %></li>
+                            <li><a class="dropdown-item head" href="/updatepassword">Update Password</a></li>
+                            <li><a class="dropdown-item head" href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link head" href="#contact">Contact</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="hero-section">
+            <h1 id="firsthead"> Welcome to Magway CU
+            </h1>
+            <h5 class="text-success"> About Learning Management System</h5>
+            <p class="text-dark">
+
+
+                Learning management system is a dedicated
+                quiz platform designed to complement
+                and reinforce the subjects that students
+                are taught in their courses.
+                Our project is centered around providing students
+                with an interactive and
+                engaging tool to solidify
+                their understanding of course materials
+                through targeted quizzes.
+            </p>
+            <h5 class="text-success">
+                Mission
+            </h5>
+            <p class="text-dark">
+                At Learning management, our mission is to empower students
+                in mastering their course content.
+                We believe that active engagement
+                with course material enhances learning
+                outcomes, and this system is committed to
+                making this process enjoyable, effective, and tailored
+                to individual
+                courses.
+            </p>
+
+            <h5 class="text-success">
+                Key Features
+
+            </h5>
+
+            <p class="text-dark">
+                Course-Specific Quizzes:
+                this system focuses on the specific subjects
+                and topics that students are taught in their courses. From
+                Mathematics and Programming language to Literature
+                our quizzes are designed to align seamlessly with your
+                academic curriculum.
+            </p>
+
+
+
+            <h5 class="text-success">Tailored Learning Paths:</h5>
+            <p class="text-dark">
+                Customize your learning experience by selecting quizzes
+                that match your current coursework. Whether you are
+                preparing for an upcoming exam
+                , Quiz provides targeted
+                quizzes to suit your needs.
+
+            </p>
+
+
+
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-4 col-12 mb-5 mb-lg-0">
+
+                    <img src="static/images/paradise.png" class="waa" alt="fa">
+
+                </div>
+
+                <div class="col-lg-3 col-md-8 col-12 mb-4 mb-md-0 mb-lg-0">
+                    <h6 class="site-footer-title mb-3" id="contact">Contact</h6>
+
+                    <p class="mb-2"><strong class="d-inline me-2">Phone:</strong> 09970774831</p>
+
+                    <p>
+                        <strong class="d-inline me-2">Email:</strong>
+                        <a href=" mailto:thawhtet077@gmail.com" style='text-decoration: none;'>thawhtet077@gmail.com</a>
+                    </p>
+                    <p><strong class="d-inline me-2"><a href="/feedback"
+                                class='text-decoration-none'>Feedback</a></strong></p>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+
+
+                    <div class="site-footer-thumb mb-4 pb-2">
+                        <div class="d-flex flex-wrap">
+                            <a href="#">
+                                <img src="static/images/app-store.png" class="me-3 mb-2 mb-lg-0 img-fluid" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="static/images/play-store.png" class="img-fluid" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <h6 class="site-footer-title mb-3 text-dark">Social</h6>
+                    <ul class="social-icon">
+
+                        <li class="social-icon-item">
+                            <a href="https://www.youtube.com/@Hyperthaw" class="social-icon-link bi bi-youtube "></a>
+                        </li>
+
+                        <li class="social-icon-item">
+                            <a href="https://www.facebook.com/thaw.htet.6645211"
+                                class="social-icon-link bi-facebook "></a>
+                        </li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container pt-5">
+            <div class="row align-items-center">
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <a class="navbar-brand" href="/studenthome">
+                        <img src="static/logo.png" class="logo-image img-fluid" alt="templatemo pod talk">
+                    </a>
+                </div>
+
+                <div class="col-lg-7 col-md-4 col-12">
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a href="/studenthome" class="site-footer-link text-dark">Homepage</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <p class="copyright-text mb-0">Copyright © 2023</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/owl.carousel.min.js"></script>
+    <script src="static/js/custom.js"></script>
+</body>
+
+</html>

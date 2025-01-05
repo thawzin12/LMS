@@ -1,0 +1,361 @@
+<%- include('teacherheader.ejs') %>
+<main class='bg-info-subtle'>
+
+    <div class="container-fluid px-4 ">
+
+        <div class="row m-3">
+            <div class="col-12">
+                <div class="card border-primary">
+                    <div class="card-header text-center text-success fw-bold">
+                        Question Form
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-primary">Post New Questions</h5>
+                        <div class="main-content p-3">
+
+                            <% if (message) { %>
+                            <div class="alert alert-success"><%= message %></div>
+                            <% } %>
+                            <% if (error) { %>
+                            <div class="alert alert-danger"><%= error %></div>
+                            <% } %>
+
+                            <form action="/post-question" method="POST" class="needs-validation" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="title_name">Title</label>
+                                            <input type="text" class="form-control" id="title_name" name="title_name"
+                                                required>
+                                            <div class="invalid-feedback">
+                                                Please provide a title.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="grade">Year</label>
+                                            <select name="grade_id" id="grade" class="form-control" required>
+                                                <option value="" disabled selected>Select a Year</option>
+                                                <% if (Array.isArray(grades) && grades.length > 0) { %>
+                                                <% grades.forEach(grade => { %>
+                                                <option value="<%= grade.grade_id %>"><%= grade.grade_name %>
+                                                </option>
+                                                <% }) %>
+                                                <% } else { %>
+                                                <option value="" disabled>No grades available</option>
+                                                <% } %>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a grade.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="semester">Semester</label>
+                                            <select name="semester_id" id="semester" class="form-control" required>
+                                                <option value="" disabled selected>Select a Semester</option>
+                                                <!-- Options will be loaded dynamically -->
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a semester.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="section">Section</label>
+                                            <select name="section_id" id="section" class="form-control" required>
+                                                <option value="" disabled selected>Select a Section</option>
+                                                <!-- Options will be loaded dynamically -->
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a section.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="course">Subject</label>
+                                            <select name="course_code" id="course" class="form-control" required>
+                                                <option value="" disabled selected>Select a Subject</option>
+                                                <!-- Options will be loaded dynamically -->
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a course.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- New Fields for Time and Randomization -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="start_time">Start Time</label>
+                                            <input type="datetime-local" class="form-control" id="start_time"
+                                                name="start_time" required>
+                                            <div class="invalid-feedback">
+                                                Please select a start time.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="end_time">End Time</label>
+                                            <input type="datetime-local" class="form-control" id="end_time"
+                                                name="end_time" required>
+                                            <div class="invalid-feedback">
+                                                Please select an end time.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-group">
+                                            <label for="answer_duration_hours">Answer Duration (Hours)</label>
+                                            <input type="number" class="form-control" id="answer_duration_hours"
+                                                name="answer_duration_hours" min="0" value="00" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the duration in hours.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-group">
+                                            <label for="answer_duration_minutes">Answer Duration (Minutes)</label>
+                                            <input type="number" class="form-control" id="answer_duration_minutes"
+                                                name="answer_duration_minutes" min="0" max="59" value="00" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the duration in minutes.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-group">
+                                            <label for="answer_duration_seconds">Answer Duration (Seconds)</label>
+                                            <input type="number" class="form-control" id="answer_duration_seconds"
+                                                name="answer_duration_seconds" min="0" max="59" value="00" required>
+                                            <div class="invalid-feedback">
+                                                Please enter the duration in seconds.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="answer_time" name="answer_time">
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="randomize_questions"
+                                                name="random_order">
+                                            <label class="form-check-label" for="randomize_questions">
+                                                Randomize Questions and Choices
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="questions-container"></div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary btn-icon" id="add-question"><i
+                                                class="fas fa-plus"></i> Add Question</button>
+                                        <button type="button" class="btn btn-danger btn-icon" id="remove-question"><i
+                                                class="fas fa-minus"></i> Remove
+                                            Question</button>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-icon"><i class="fas fa-check"></i>
+                                        Post
+                                        Questions</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- start -->
+                    <div class="card-footer text-body-secondary">
+                        post the latest features
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+<%- include('teacherbottom.ejs') %>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="/static/teacher/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/static/teacher/assets/demo/chart-area-demo.js"></script>
+<script src="/static/teacher/assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="/static/teacher/js/datatables-simple-demo.js"></script>
+<!-- <script src="/static/js/bootstrap.bundle.min.js"></script> -->
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const hours = parseInt(document.getElementById('answer_duration_hours').value) || 0;
+        const minutes = parseInt(document.getElementById('answer_duration_minutes').value) || 0;
+        const seconds = parseInt(document.getElementById('answer_duration_seconds').value) || 0;
+
+        // Calculate total duration in seconds
+        const totalDuration = (hours * 3600) + (minutes * 60) + seconds;
+
+        // Set the value of the hidden input
+        document.getElementById('answer_time').value = totalDuration;
+    });
+
+    // Bootstrap form validation
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })();
+
+    // Dynamic loading of semesters, sections, and courses
+    $(document).ready(function () {
+        $('#grade').change(function () {
+            const gradeId = $(this).val();
+            $('#semester').html('<option value="" disabled selected>Loading...</option>');
+            $.getJSON(`/api/get-semesters/${gradeId}`, function (data) {
+                let semesterOptions = '<option value="" disabled selected>Select a Semester</option>';
+                data.forEach(semester => {
+                    semesterOptions += `<option value="${semester.semester_id}">${semester.semester_name}</option>`;
+                });
+                $('#semester').html(semesterOptions);
+                $('#section').html('<option value="" disabled selected>Select a Section</option>');
+                $('#course').html('<option value="" disabled selected>Select a Course</option>');
+            });
+        });
+
+        $('#semester').change(function () {
+            const gradeId = $('#grade').val();
+            const semesterId = $(this).val();
+            $('#section').html('<option value="" disabled selected>Loading...</option>');
+            $.getJSON(`/api/get-sections/${gradeId}/${semesterId}`, function (data) {
+                let sectionOptions = '<option value="" disabled selected>Select a Section</option>';
+                data.forEach(section => {
+                    sectionOptions += `<option value="${section.section_id}">${section.section_name}</option>`;
+                });
+                $('#section').html(sectionOptions);
+                $('#course').html('<option value="" disabled selected>Select a Course</option>');
+            });
+        });
+
+        $('#section').change(function () {
+            const gradeId = $('#grade').val();
+            const semesterId = $('#semester').val();
+            const sectionId = $(this).val();
+            $('#course').html('<option value="" disabled selected>Loading...</option>');
+            $.getJSON(`/api/get-courses/${gradeId}/${semesterId}/${sectionId}`, function (data) {
+                let courseOptions = '<option value="" disabled selected>Select a Course</option>';
+                data.forEach(course => {
+                    courseOptions += `<option value="${course.course_code}">${course.course_name}</option>`;
+                });
+                $('#course').html(courseOptions);
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let questionCount = 0;
+
+        // Add Question button click event
+        document.getElementById('add-question').addEventListener('click', function () {
+            questionCount++;
+            const questionsContainer = document.getElementById('questions-container');
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question-block');
+            questionDiv.innerHTML = `
+                    <div class="form-group">
+                        <label for="question_${questionCount}">Question ${questionCount}</label>
+                        <textarea class="form-control" id="question_${questionCount}" name="questions[${questionCount}][text]" rows="3" required></textarea>
+                        <div class="invalid-feedback">
+                            Please enter the question text.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mark_${questionCount}">Marks</label>
+                        <input type="number" class="form-control" id="mark_${questionCount}" name="questions[${questionCount}][marks]" required>
+                        <div class="invalid-feedback">
+                            Please enter the marks.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Choices</label>
+                        <div id="choices_${questionCount}">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="questions[${questionCount}][choices][]" required>
+                                <input type="hidden" name="questions[${questionCount}][choices_correct][${questionCount}_0]" value="false">
+                                <input type="checkbox" class="form-check-input ms-2" id="choice_correct_${questionCount}_0" name="questions[${questionCount}][choices_correct][${questionCount}_0]" value="true">
+                                <button type="button" class="btn btn-danger btn-sm ms-2 remove-choice">Remove</button>
+                            </div>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="questions[${questionCount}][choices][]" required>
+                                <input type="hidden" name="questions[${questionCount}][choices_correct][${questionCount}_1]" value="false">
+                                <input type="checkbox" class="form-check-input ms-2" id="choice_correct_${questionCount}_1" name="questions[${questionCount}][choices_correct][${questionCount}_1]" value="true">
+                                <button type="button" class="btn btn-danger btn-sm ms-2 remove-choice">Remove</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm add-choice">Add Choice</button>
+                    </div>
+                `;
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        document.getElementById('remove-question').addEventListener('click', function () {
+            if (questionCount > 0) {
+                const questionsContainer = document.getElementById('questions-container');
+                questionsContainer.removeChild(questionsContainer.lastElementChild);
+                questionCount--;
+            }
+        });
+
+        document.getElementById('questions-container').addEventListener('click', function (e) {
+            if (e.target.classList.contains('add-choice')) {
+                const questionBlock = e.target.closest('.question-block');
+                const choicesContainer = questionBlock.querySelector('[id^="choices_"]');
+                const newChoiceIndex = choicesContainer.querySelectorAll('.input-group').length;
+                const newChoiceDiv = document.createElement('div');
+                newChoiceDiv.classList.add('input-group', 'mb-2');
+                newChoiceDiv.innerHTML = `
+                        <input type="text" class="form-control" name="questions[${questionCount}][choices][]" required>
+                        <input type="hidden" name="questions[${questionCount}][choices_correct][${questionCount}_${newChoiceIndex}]" value="false">
+                        <input type="checkbox" class="form-check-input ms-2" id="choice_correct_${questionCount}_${newChoiceIndex}" name="questions[${questionCount}][choices_correct][${questionCount}_${newChoiceIndex}]" value="true">
+                        <button type="button" class="btn btn-danger btn-sm ms-2 remove-choice">Remove</button>
+                    `;
+                choicesContainer.appendChild(newChoiceDiv);
+            }
+        });
+
+        document.getElementById('questions-container').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-choice')) {
+                e.target.closest('.input-group').remove();
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>

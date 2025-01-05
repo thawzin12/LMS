@@ -1,0 +1,88 @@
+<%- include('teacherheader.ejs') %>
+<main>
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="main-content p-3">
+                    <h1 class="">Manage Titles</h1>
+                    <% if (success) { %>
+                    <div class="alert alert-success">
+                        <marquee behavior="scroll" direction="left"><%= success %></marquee>
+                    </div>
+                    <% } %>
+
+                    <% if (titles.length === 0) { %>
+                    <div class="alert alert-warning" role="alert">
+                        No titles available.
+                    </div>
+                    <% } else { %>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" id="datatablesSimple">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th class='text-center'>NO.</th>
+                                    <th class='text-center'>Title Name</th>
+                                    <th class='text-center'>Details</th>
+                                    <th class='text-center'>Delete</th>
+                                    <th class='text-center'>View Questions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% titles.forEach((title,index) => { %>
+                                <tr>
+                                    <td class='text-center'><%= ++index %></td>
+                                    <td class='text-center'><%= title.title_name %></td>
+
+                                    <td class="text-center">
+                                        <a href="/edit-title/<%= title.title_id %>" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-info-circle"></i>Details</a>
+                                    </td>
+                                    <td class='text-center'>
+                                        <a href="/delete-title/<%= title.title_id %>"
+                                            onclick="return confirm('Are you sure you want to delete this title?');"
+                                            class="btn btn-sm btn-outline-danger"> <i class="fas fa-trash-alt"></i>
+                                            Delete</a>
+                                    </td>
+                                    <td class='text-center'>
+                                        <a href="/title-details/<%= title.title_id %>" class="btn btn-sm btn-info">
+                                            <i class="fas fa-info-circle"></i> View Questions
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <% } %>
+
+                    <a href="/post-question" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Create New Title
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+<%- include('teacherbottom.ejs') %>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="/static/teacher/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/static/teacher/assets/demo/chart-area-demo.js"></script>
+<script src="/static/teacher/assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="/static/teacher/js/datatables-simple-demo.js"></script>
+<!-- <script src="/static/js/bootstrap.bundle.min.js"></script> -->
+<script src="/static/js/jquery.min.js"></script>
+
+</body>
+
+</html>

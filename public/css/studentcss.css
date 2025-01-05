@@ -1,0 +1,43 @@
+li {
+    font-weight: bold
+}
+
+.lin {
+    text-decoration: none;
+}
+
+.waa {
+    max-width: 300px;
+    min-height: auto;
+    min-width: 50px;
+}
+
+.hay {
+    border-radius: 50%;
+    max-width: 60px;
+
+}
+
+.head {
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+}
+
+@media (max-width:768px) {
+    .hay {
+        width: 40px;
+    }
+
+    .head {
+        font-size: 12px;
+
+    }
+
+}
+
+@media(max-width:400) {
+    .hay {
+        width: 30px;
+    }
+}

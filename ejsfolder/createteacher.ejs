@@ -1,0 +1,104 @@
+<%- include('admintop.ejs') %>
+<%- include('adminheader.ejs') %>
+<%- include('adminsidebar.ejs') %>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="adminhome">Home</a></li>
+                <li class="breadcrumb-item">Manage Teacher</li>
+                <li class="breadcrumb-item active"><a href="createteacher">Create Teacher</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            
+            <div class="col-12 col-sm-10 col-md-8 offset-md-2 offset-lg-2">
+                <div class="card">
+                    <center>
+                        <% if (errors.general) { %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <%= errors.general %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <% } 
+                         if (success.suc) { %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <%= success.suc %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <% } %>
+                    </center>
+
+                    <div class="card-body">
+                        <h3 class='text-primary text-center m-3 cam font-weight-bold'>Create Teacher Account</h3>
+                        <form class="row g-3 needs-validation" action="/admin/createteacher" method="POST" novalidate>
+                            <div class="col-md-12">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" name="email" id="email" maxlength="60"
+                                    value="<%= data.email || '' %>"
+                                    class='form-control <%= errors.email ? 'is-invalid' : '' %>' required>
+                                <div class="invalid-feedback">
+                                    <%= errors.email || 'Email is required' %>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="name" class='form-label'>Name</label>
+                                <input type="text" name="name" id="name"
+                                    class='form-control <%= errors.name ? 'is-invalid' : '' %>' maxlength="50"
+                                    value="<%= data.name || '' %>" required>
+                                <div class="invalid-feedback">
+                                    <%= errors.name || 'Name is required' %>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" minlength="8" maxlength="15"
+                                        class="form-control <%= errors.password ? 'is-invalid' : '' %>" id='password'
+                                        name="password" value="<%= data.password || '' %>" required>
+                                    <button class="btn btn-primary" type="button" id="togglePassword">
+                                        <i class="bi bi-eye-slash"></i>
+                                    </button>
+                                    <div class="invalid-feedback">
+                                        <%= errors.password || 'Password is required' %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-outline-primary">Create</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </form><!-- end of the submission form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+
+<%- include('adminfooter.ejs') %>
+<%- include('adminbottom.ejs') %>
+
+<script>
+    // Bootstrap form validation
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+    })();
+
+</script>
+<script src="/static/js/eye.js"></script>
