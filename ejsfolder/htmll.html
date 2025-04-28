@@ -6,6 +6,263 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="ibox">
+                <div class="ibox-head bg-info">
+                    <div class="ibox-title text-white">Patient Registration Form</div>
+                    <div class="ibox-tools">
+                        <a class="ibox-collapse"><i class="fa fa-minus text-white"></i></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v text-white"></i></a>
+                        <a class="fullscreen-link"><i class="fa fa-expand text-white"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-body">
+                    <form action="@Url.Action("addpatient","admin")" method="post" enctype="multipart/form-data">
+                        <div class="text-center mb-3">
+                            <img id="photoPreview" src="" class="img-thumbnail" style="width: 100px; height: 100px;" alt="Profile Picture">
+                            <br>
+                            <label class="btn btn-primary mt-2">
+                                <i class="fa fa-camera"></i> Choose Patient Photo
+                                <input type="file" id="photoUpload" class="d-none" name="Photo" accept="image/*">
+                            </label>
+                            <small class="text-danger d-none" id="photoError">Please choose a profile picture.</small>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label for="patientName">Patient Name</label>
+                                <input class="form-control" type="text" id="patientName" name="PName">
+                                <small class="text-danger d-none" id="patientNameError">name is required</small>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="phone">Phone</label>
+                                <input class="form-control" type="text" id="phone" name="PPhone">
+                                <small class="text-danger d-none" id="phoneError">phone number is required.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label for="age">Age</label>
+                                <input class="form-control" type="text" id="age" name="Age" >
+                                <small class="text-danger d-none" id="ageError">age is required.</small>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="address">Address</label>
+                                <input class="form-control" type="text" id="address" name="Address">
+                                <small class="text-danger d-none" id="addressError">address is required</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Speciality</label>
+                                <select class="form-control" id="speciality" name="SpecializationId" >
+                                    <option selected disabled value="">Choose Speciality</option>
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+    
+                                        foreach (var item in Model)
+                                        {
+                                            <option value="@item.SpecializationId">
+                                                @item.SpecName
+                                            </option>
+    
+                                        }
+                                    }
+                                </select>
+                                <small class="text-danger d-none" id="specialityError">Please select a speciality.</small>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="doctorName">Doctor Name</label>
+                                <select class="form-control" id="doctorName" name="DocId">
+                                    <option selected disabled value="">Choose Doctor</option>
+                                </select>
+                                <small class="text-danger d-none" id="doctorError">Please select a doctor.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label for="datetime">Date & Time</label>
+                                <input class="form-control" type="datetime-local" id="datetime" name="DateTime" >
+                                <small class="text-danger d-none" id="datetimeError">Please select a register time</small>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="symptom">symptom</label>
+                                <input class="form-control" type="text" id="symptom" name="Symptom">
+                                <small class="text-danger d-none" id="symptomError">plese fill symptom</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Gender</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Gender" id="male" value="Male">
+                                        <label class="form-check-label" for="male">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="Gender" id="female" value="Female">
+                                        <label class="form-check-label" for="female">Female</label>
+                                    </div>
+                                    <small class="text-danger d-none" id="genderError">Please select a gender.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button class="btn btn-success text-white" type="submit">Submit</button>
+                            <button class="btn btn-secondary text-white" type="reset">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("photoUpload").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("photoPreview").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    
+        document.getElementById("speciality").addEventListener("change", function () {
+            const specializationId = this.value;
+            const doctorName = document.getElementById("doctorName");
+            console.log("Selected Specialization ID:", specializationId);
+    
+            doctorName.innerHTML = '<option selected disabled value="">Choose Doctor</option>';
+    
+            if (specializationId) {
+                fetch(`/Admin/GetDoctorsBySpeciality?specializationId=${specializationId}`)
+                    .then(response => response.json())  // Extract JSON correctly
+                    .then(doctors => {
+                        if (doctors.error) {
+                            console.log("Error:", doctors.error);
+                        } else {
+                            doctors.forEach(doctor => {
+                                const option = document.createElement("option");
+                                option.value = doctor.DocId;
+                                option.textContent = doctor.Name;
+                                doctorName.appendChild(option);
+                            });
+                        }
+                    })
+                    .catch(error => console.error("Fetch error:", error));
+                }
+        });
+    
+        let allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+    
+    
+        form.addEventListener("submit", function (event) {
+            let patientNameError = document.getElementById("patientNameError");
+            let phoneError = document.getElementById("phoneError");
+            let ageError = document.getElementById("ageError");
+            let addressError = document.getElementById("addressError");
+            let specialityError = document.getElementById("specialityError");
+            let doctorError = document.getElementById("doctorError");
+            let datetimeError = document.getElementById("datetimeError");
+            let genderError = document.getElementById("genderError");
+            let symptomError = document.getElementById("symptomError");
+            let photoError = document.getElementById("photoError");
+            
+            document.querySelectorAll(".text-danger").forEach(el => el.classList.add("d-none"));
+            let photoUpload = document.getElementById("photoUpload");
+            let isValid = true;
+    
+            if (!photoUpload.files.length) {
+                document.getElementById("photoError").classList.remove("d-none");
+                isValid = false;
+            } else {
+                let fileName = photoUpload.files[0].name;
+                let fileExtension = fileName.split('.').pop().toLowerCase();
+    
+                if (!allowedExtensions.includes(fileExtension)) {
+                    photoError.textContent = "Invalid file type! Allowed: jpg, jpeg, png, gif.";
+                    photoError.classList.remove("d-none");
+                    isValid = false;
+                } else {
+                    photoError.classList.add("d-none");
+                }
+            }
+            // Validation
+           
+            const pname = document.getElementById("patientName").value.trim();
+            if (pname == "") {
+                patientNameError.textContent = "name is required";
+                patientNameError.classList.remove("d-none");
+                isValid = false;
+            } else if (pname.length < 3) {
+                patientNameError.textContent = "name is too short!";
+                patientNameError.classList.remove("d-none");
+                isValid = false;
+            }
+            else(!/^[A-Za-z ]+$/.test(pname)){
+                patientNameError.textContent = "invalid name";
+                patientNameError.classList.remove("d-none");
+                isValid = false;
+            }
+           
+            const phone = document.getElementById("phone").value.trim();
+            if (phone == "") {
+                phoneError.textContent = "phone number is required";
+                phoneError.classList.remove("d-none");
+                isValid = false;
+            }
+            else if (!/^(09|\+959)[0-9]{7,9}$/.test(phone)) {
+                phoneError.textContent = "Invalid phone number";
+                phoneError.classList.remove("d-none");
+                isValid = false;
+            }
+           
+            const date = document.getElementById("datetime").value;
+            if (!datetime) {
+             
+                datetimeError.classList.remove("d-none");
+                isValid = false;
+            }
+           
+    
+            const docid = document.getElementById("doctorName").value.trim();
+            if (!docid) {
+                doctorError.classList.remove("d-none");
+                isValid = false;
+            }
+    
+            const symptom = document.getElementById("symptom").value.trim();
+            if (!symptom) {
+                symptomError.textContent = "please fill symptom";
+                symptomError.classList.remove("d-none");
+                isValid = false;
+            }
+            else if (/^[A-Za-z ]+$/.test(symptom)) {
+                symptomError.textContent = "fill only text";
+                symptomError.classList.remove("d-none");
+                isValid = false;
+    
+            }
+    
+            const speciality = document.getElementById("speciality").value;
+            if (!speciality) {
+                specialityError.classList.remove("d-none");
+                isValid = false;
+            }
+            const gender = document.querySelector('input[name="Gender"]:checked');
+            if (!gender) {
+                genderError.classList.remove("d-none");
+                isValid = false;
+            }
+    
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    
+    
+    </script>
     
 </body>
 </html>
