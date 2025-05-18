@@ -1,146 +1,125 @@
-const express = require('express');
-const session = require('express-session');
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
-const path = require('path');
-const uuid = require('uuid');
+const express = require("express");
+const session = require("express-session");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+const path = require("path");
+const uuid = require("uuid");
 const app = express();
-app.use(session({
+app.use(
+  session({
     genid: (req) => uuid.v4(),
     secret: uuid.v4(),
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 60000000 * 1000,
-    }
-}));
-const dotenv = require('dotenv');
-const fs = require('fs');
-var caculate = require('./caculator');
+      maxAge: 60000000 * 1000,
+    },
+  })
+);
+const dotenv = require("dotenv");
+const fs = require("fs");
+var caculate = require("./caculator");
 //admindashboardpage
-const adminhome = require('./routes/adminhomeroute');
-app.use('/admin', adminhome);
+const adminhome = require("./routes/adminhomeroute");
+app.use("/admin", adminhome);
 
 //admin route of function
-const createteacher = require('./routes/adminperformteacher');
-app.use('/admin', createteacher);
+const createteacher = require("./routes/adminperformteacher");
+app.use("/admin", createteacher);
 
-
-const admincreatestudent = require('./routes/admincreatestudent');
-app.use('/admin', admincreatestudent);
+const admincreatestudent = require("./routes/admincreatestudent");
+app.use("/admin", admincreatestudent);
 
 // for assignment duty
-const adminassignduty = require('./routes/adminRoute');
-app.use('/admin', adminassignduty);
-
+const adminassignduty = require("./routes/adminRoute");
+app.use("/admin", adminassignduty);
 
 //for student
-const adminstudentroute = require('./routes/adminstudentRoute');
-app.use('/admin', adminstudentroute);
+const adminstudentroute = require("./routes/adminstudentRoute");
+app.use("/admin", adminstudentroute);
 
-
-
-const adminCourseRouter = require('./routes/adminCourse');
-app.use('/admin', adminCourseRouter);
+const adminCourseRouter = require("./routes/adminCourse");
+app.use("/admin", adminCourseRouter);
 
 //end of admin rout of function
-const dashboardRoute = require('./routes/dashboardRoute');
-const Manner = require('./routes/forgetpasswordhandling');
-const questions = require('./routes/questionroute');
-const Router = require('./routes/route');
-const userinterface = require('./routes/userinterface');
-const teacherroute = require('./routes/teacherroute');
-const studentroute = require('./routes/studentroute');
-const mysql2 = require('mysql2/promise');
-const bcrypt = require('bcrypt');
-const ejs = require('ejs');
-app.set('view engine', 'ejs');//embedded javascript for rendering dynamic web page
-const studentanswer = require('./routes/studentanswer');
-app.use('/', studentanswer);
+const dashboardRoute = require("./routes/dashboardRoute");
+const Manner = require("./routes/forgetpasswordhandling");
+const questions = require("./routes/questionroute");
+const Router = require("./routes/route");
+const userinterface = require("./routes/userinterface");
+const teacherroute = require("./routes/teacherroute");
+const studentroute = require("./routes/studentroute");
+const mysql2 = require("mysql2/promise");
+const bcrypt = require("bcrypt");
+const ejs = require("ejs");
+app.set("view engine", "ejs"); //embedded javascript for rendering dynamic web page
+const studentanswer = require("./routes/studentanswer");
+app.use("/", studentanswer);
 //viewengine is a folder name
 let hashed;
 var hashPassword;
 dotenv.config();
-const bodyparser = require('body-parser');
+const bodyparser = require("body-parser");
 app.use(bodyparser.urlencoded({ extended: true }));
 
-app.use('/', Router);
-app.use('/', Manner);
-app.use('/', dashboardRoute);
-app.use('/', userinterface);
-app.use('/', questions);
-app.use('/', teacherroute);
-app.use('/', studentroute);
-app.get('/', (req, res) => {
-    res.render('index'); // Replace 'index' with the name of your main page file (without .ejs)
+app.use("/", Router);
+app.use("/", Manner);
+app.use("/", dashboardRoute);
+app.use("/", userinterface);
+app.use("/", questions);
+app.use("/", teacherroute);
+app.use("/", studentroute);
+app.get("/", (req, res) => {
+  res.render("index"); // Replace 'index' with the name of your main page file (without .ejs)
 });
 
-app.set('views', path.join(__dirname, 'ejsfolder'));
-app.use('/static', express.static(path.join(__dirname, 'public')));//for imag
+app.set("views", path.join(__dirname, "ejsfolder"));
+app.use("/static", express.static(path.join(__dirname, "public"))); //for imag
 
-app.listen(4500, () => {
-    console.log('herher');
-    console.log(`server is listening at 4000`);
-})
+const PORT = process.env.PORT || 4500;
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
 
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: 'Thaw@#245',
-    database: 'userdatabase',
+  host: "localhost",
+  user: "root",
+  password: "Thaw@#245",
+  database: "userdatabase",
 };
 var pool;
 try {
-    pool = mysql2.createPool(dbConfig);
-}
-
-catch (err) {
-    console.log(err);
+  pool = mysql2.createPool(dbConfig);
+} catch (err) {
+  console.log(err);
 }
 
 app.use((req, res, next) => {
-    req.pool = dbConfig;    //attach the database pool
-    next();
-})
-app.set('db', pool);
-
+  req.pool = dbConfig; //attach the database pool
+  next();
+});
+app.set("db", pool);
 
 const checkTeacher = (req, res, next) => {
-    // Example middleware to check if user is a teacher
-    // Implement actual authentication and role check
-    if (req.session.isTeacher) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
+  // Example middleware to check if user is a teacher
+  // Implement actual authentication and role check
+  if (req.session.isTeacher) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
 };
 
 // Middleware to check if user is a student
 const checkStudent = (req, res, next) => {
-    // Example middleware to check if user is a student
-    // Implement actual authentication and role check
-    if (req.session.isStudent) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
+  // Example middleware to check if user is a student
+  // Implement actual authentication and role check
+  if (req.session.isStudent) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // var transporter = nodemailer.createTransport({
 //     service: 'gmail',
@@ -184,7 +163,6 @@ const checkStudent = (req, res, next) => {
 //     res.send(updateGive);
 // });
 
-
 // Section of The database of the mind
 
 // database section
@@ -208,7 +186,4 @@ const checkStudent = (req, res, next) => {
 //     console.log('Connected to MySQL database');
 // });
 
-
-
 // Verify OTP
-
