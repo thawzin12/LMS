@@ -1,21 +1,24 @@
 const express = require("express");
 const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const path = require("path");
 const uuid = require("uuid");
 const app = express();
-app.use(
-  session({
-    genid: (req) => uuid.v4(),
-    secret: uuid.v4(),
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 60000000 * 1000,
-    },
-  })
-);
+
+// app.use(
+//   session({
+//     genid: (req) => uuid.v4(),
+//     secret: uuid.v4(),
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       maxAge: 60000000 * 1000,
+//     },
+//   })
+// );
+
 const dotenv = require("dotenv");
 dotenv.config();
 const fs = require("fs");
@@ -88,7 +91,18 @@ const dbConfig = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
 };
+const sessionStore = new MySQLStore(dbConfig);
 
+app.use(
+  session({
+    key: "session_cookie",
+    secret: process.env.SESSION_SECRET,
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day for example
+  })
+);
 var pool;
 try {
   pool = mysql2.createPool(dbConfig);
