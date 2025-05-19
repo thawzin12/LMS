@@ -17,6 +17,7 @@ app.use(
   })
 );
 const dotenv = require("dotenv");
+dotenv.config();
 const fs = require("fs");
 var caculate = require("./caculator");
 //admindashboardpage
@@ -80,13 +81,14 @@ const PORT = process.env.PORT || 4500;
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
-
 const dbConfig = {
-  host: "localhost",
-  user: "root",
-  password: "Thaw@#245",
-  database: "userdatabase",
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 };
+
 var pool;
 try {
   pool = mysql2.createPool(dbConfig);
